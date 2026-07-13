@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PEMBUKUAN HAUL ALUMNI AL ALBAB</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header class="header">
+        <h1>PEMBUKUAN</h1>
+        <p>HAUL ALUMNI AL ALBAB</p>
+    </header>
+
+    <!-- ========================= -->
+    <!-- DASHBOARD -->
+    <!-- ========================= -->
+
+    <section id="dashboard" class="page active">
+
+        <div class="card">
+            <span>💰 Kas Masuk</span>
+            <h2 id="kasMasuk">Rp0</h2>
+        </div>
+
+        <div class="card">
+            <span>🏦 Kas Rekening</span>
+            <h2 id="kasRekening">Rp0</h2>
+        </div>
+
+        <div class="card">
+            <span>💵 Kas Cash</span>
+            <h2 id="kasCash">Rp0</h2>
+        </div>
+
+        <div class="card">
+            <span>💸 Kas Keluar</span>
+            <h2 id="kasKeluar">Rp0</h2>
+        </div>
+
+        <div class="card saldo">
+            <span>💳 Saldo Kas</span>
+            <h2 id="saldoKas">Rp0</h2>
+        </div>
+
+        <div class="section-title">
+            📊 Rekap Kabupaten
+        </div>
+
+        <div class="table-container">
+
+            <table id="rekapKabupaten">
+
+                <thead>
+                    <tr>
+                        <th>Kabupaten</th>
+                        <th>Total Kas</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="section-title">
+            👤 Rekap Via
+        </div>
+
+        <div class="table-container">
+
+            <table id="rekapVia">
+
+                <thead>
+                    <tr>
+                        <th>Via</th>
+                        <th>Total Kas</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- KAS MASUK -->
+    <!-- ========================= -->
+
+    <section id="masuk" class="page">
+
+        <div class="section-title">
+            📥 Kas Masuk
+        </div>
+
+        <input
+            type="text"
+            id="searchMasuk"
+            placeholder="Cari Donatur..."
+        >
+
+        <div class="table-container">
+
+            <table id="tableMasuk">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Tanggal</th>
+                        <th>Nama</th>
+                        <th>Kabupaten</th>
+                        <th>Domisili</th>
+                        <th>Nominal</th>
+                        <th>Metode</th>
+                        <th>Via</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- KAS KELUAR -->
+    <!-- ========================= -->
+
+    <section id="keluar" class="page">
+
+        <div class="section-title">
+            📤 Kas Keluar
+        </div>
+
+        <input
+            type="text"
+            id="searchKeluar"
+            placeholder="Cari Keperluan..."
+        >
+
+        <div class="table-container">
+
+            <table id="tableKeluar">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Tanggal</th>
+                        <th>Keperluan</th>
+                        <th>Kategori</th>
+                        <th>Penerima</th>
+                        <th>Nominal</th>
+                        <th>Dibayar Oleh</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- LAPORAN -->
+    <!-- ========================= -->
+
+    <section id="laporan" class="page">
+
+        <div class="section-title">
+            📄 Laporan Pembukuan
+        </div>
+
+        <div class="card">
+            <span>Total Kas Masuk</span>
+            <h2 id="lapKasMasuk">Rp0</h2>
+        </div>
+
+        <div class="card">
+            <span>Total Kas Keluar</span>
+            <h2 id="lapKasKeluar">Rp0</h2>
+        </div>
+
+        <div class="card saldo">
+            <span>Saldo Kas</span>
+            <h2 id="lapSaldoKas">Rp0</h2>
+        </div>
+
+        <div class="section-title">
+            📊 Rekap Kabupaten
+        </div>
+
+        <div class="table-container">
+
+            <table id="lapKabupaten">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Kabupaten</th>
+                        <th>Total</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="section-title">
+            👤 Rekap Via
+        </div>
+
+        <div class="table-container">
+
+            <table id="lapVia">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Via</th>
+                        <th>Total</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- ========================= -->
+<!-- BOTTOM NAVIGATION -->
+<!-- ========================= -->
+
+<nav class="bottom-nav">
+
+    <button class="nav-btn active" data-page="dashboard">
+        <span>🏠</span>
+        <small>Dashboard</small>
+    </button>
+
+    <button class="nav-btn" data-page="masuk">
+        <span>📥</span>
+        <small>Kas Masuk</small>
+    </button>
+
+    <button class="nav-btn" data-page="keluar">
+        <span>📤</span>
+        <small>Kas Keluar</small>
+    </button>
+
+    <button class="nav-btn" data-page="laporan">
+        <span>📄</span>
+        <small>Laporan</small>
+    </button>
+
+</nav>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
