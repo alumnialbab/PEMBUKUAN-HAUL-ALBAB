@@ -18,10 +18,10 @@ const CSV = {
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vSPMBOYCmeuRcXWfZdjtGZUGSSOrh6xQH3xpxzTsfiRPz4qjoje_jJpJC0oNch5-_wIeSeMbVmF3Dng/pub?gid=554794101&single=true&output=csv",
 
     kasMasuk:
-        "",
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vSPMBOYCmeuRcXWfZdjtGZUGSSOrh6xQH3xpxzTsfiRPz4qjoje_jJpJC0oNch5-_wIeSeMbVmF3Dng/pub?gid=0&single=true&output=csv",
 
     kasKeluar:
-        ""
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vSPMBOYCmeuRcXWfZdjtGZUGSSOrh6xQH3xpxzTsfiRPz4qjoje_jJpJC0oNch5-_wIeSeMbVmF3Dng/pub?gid=1232308945&single=true&output=csv"
 
 };
 
