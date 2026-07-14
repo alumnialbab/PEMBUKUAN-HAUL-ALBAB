@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,53 +8,40 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons via CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- ChartJS for Beautiful Visualizations -->
+    <!-- ChartJS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- jsPDF & AutoTable for complete dynamic PDF downloads -->
+    <!-- jsPDF & AutoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
     <style>
-        /* CSS VARIABLE SYSTEMS */
+        /* LIGHT PREMIUM HYBRID DESIGN SYSTEM */
         :root {
-            --primary: #10b981;
-            --primary-glow: rgba(16, 185, 129, 0.15);
-            --secondary: #14b8a6;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
+            --primary: #0f5132;       /* Hijau Emerald Deep Islami */
+            --primary-light: #d1e7dd; /* Hijau Soft Background */
+            --primary-glow: rgba(15, 81, 50, 0.08);
+            --secondary: #198754;     /* Hijau Aksen Utama */
+            --success: #198754;
+            --danger: #dc3545;
+            --warning: #ffc107;
             
-            /* Dark Theme Default */
-            --bg-base: #0f172a;
-            --bg-glass: rgba(30, 41, 59, 0.45);
-            --bg-glass-hover: rgba(30, 41, 59, 0.65);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --border-glass-focus: rgba(16, 185, 129, 0.5);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            --blur: 16px;
-        }
-
-        [data-theme="light"] {
-            /* Light Theme Values */
-            --bg-base: #f1f5f9;
-            --bg-glass: rgba(255, 255, 255, 0.65);
-            --bg-glass-hover: rgba(255, 255, 255, 0.85);
-            --border-glass: rgba(15, 23, 42, 0.08);
-            --border-glass-focus: rgba(16, 185, 129, 0.5);
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #94a3b8;
-            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
-            --blur: 16px;
+            /* Clean Light Aesthetic Backgrounds */
+            --bg-base: #f8f9fa;       /* Putih Bersih Ringan */
+            --bg-glass: #ffffff;      /* Putih Kontras Murni */
+            --bg-glass-hover: #f1f3f5;
+            --border-glass: #e9ecef;  /* Batas Tipis Elegan */
+            --border-glass-focus: #198754;
+            --text-primary: #212529;  /* Hitam Pekat Sangat Kontras */
+            --text-secondary: #495057;/* Hitam Lembut Semi Terang */
+            --text-muted: #6c757d;    /* Abu Keterangan */
+            --shadow: 0 4px 18px 0 rgba(33, 37, 41, 0.04);
+            --blur: 0px;
         }
 
         /* RESET & BASE STYLING */
@@ -64,7 +50,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -73,12 +59,11 @@
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 10% 20%, var(--primary-glow) 0%, transparent 40%),
-                              radial-gradient(circle at 90% 80%, rgba(20, 184, 166, 0.1) 0%, transparent 45%);
+            background-image: radial-gradient(circle at 0% 0%, var(--primary-glow) 0%, transparent 35%),
+                              radial-gradient(circle at 100% 100%, rgba(25, 135, 84, 0.04) 0%, transparent 35%);
             background-attachment: fixed;
         }
 
-        /* SCROLLBAR CUSTOMIZATION */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -87,7 +72,7 @@
             background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--text-muted);
+            background: #dee2e6;
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
@@ -100,17 +85,15 @@
             min-height: 100vh;
         }
 
-        /* SIDEBAR (DESKTOP) */
+        /* SIDEBAR */
         #sidebar {
             width: 280px;
             background: var(--bg-glass);
-            backdrop-filter: blur(var(--blur));
-            -webkit-backdrop-filter: blur(var(--blur));
             border-right: 1px solid var(--border-glass);
-            padding: 2rem 1.5rem;
+            padding: 2.5rem 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 2.5rem;
             position: fixed;
             height: 100vh;
             z-index: 100;
@@ -123,36 +106,34 @@
         }
 
         .logo-icon {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
+            background: var(--primary);
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            color: #ffffff;
         }
 
         .logo-text h1 {
             font-size: 1.25rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #34d399, #2dd4bf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
         }
 
         .logo-text span {
             font-size: 0.75rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            letter-spacing: 1px;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         .nav-links {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.4rem;
             flex-grow: 1;
         }
 
@@ -160,8 +141,8 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 1rem 1.25rem;
-            border-radius: 12px;
+            padding: 0.85rem 1rem;
+            border-radius: 10px;
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 600;
@@ -175,17 +156,17 @@
         }
 
         .nav-item.active {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(20, 184, 166, 0.15));
-            border-color: rgba(16, 185, 129, 0.3);
+            background: var(--primary-light);
             color: var(--primary);
+            font-weight: 700;
         }
 
         /* MAIN CONTENT SECTION */
         #main-content {
             margin-left: 280px;
             flex-grow: 1;
-            padding: 2rem;
-            padding-bottom: 7rem; /* Space for mobile nav if visible */
+            padding: 2rem 2.5rem;
+            padding-bottom: 7rem;
         }
 
         /* HEADER */
@@ -193,11 +174,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             background: var(--bg-glass);
-            backdrop-filter: blur(var(--blur));
             border: 1px solid var(--border-glass);
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 1.25rem 2rem;
             box-shadow: var(--shadow);
         }
@@ -205,28 +185,31 @@
         .header-title-area h2 {
             font-size: 1.5rem;
             font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
         }
 
         .header-title-area p {
             font-size: 0.875rem;
-            color: var(--text-secondary);
+            color: var(--text-muted);
+            margin-top: 0.15rem;
         }
 
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
-        /* ACTION BUTTONS & TRANSITIONS */
+        /* BUTTONS */
         .btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.75rem 1.25rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-glass);
-            background: var(--bg-glass);
+            padding: 0.7rem 1.2rem;
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            background: #ffffff;
             color: var(--text-primary);
             font-size: 0.875rem;
             font-weight: 600;
@@ -237,35 +220,30 @@
 
         .btn:hover {
             background: var(--bg-glass-hover);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .btn:active {
-            transform: translateY(0);
+            border-color: var(--text-muted);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+            background: var(--primary);
+            color: #ffffff;
             border: none;
         }
 
         .btn-primary:hover {
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
-            filter: brightness(1.1);
+            background: #0b3d26;
+            color: #ffffff;
         }
 
         .icon-btn {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
+            background: #ffffff;
+            border: 1px solid #ced4da;
             color: var(--text-primary);
         }
 
@@ -275,30 +253,31 @@
             border-color: var(--primary);
         }
 
-        /* AUTO REFRESH BADGE */
+        /* BADGES */
         .auto-refresh-badge {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.75rem;
             padding: 0.4rem 0.8rem;
-            border-radius: 99px;
-            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            background: var(--primary-light);
             color: var(--primary);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            font-weight: 600;
+            border: 1px solid rgba(25, 135, 84, 0.15);
+            font-weight: 700;
+            cursor: pointer;
         }
 
         .auto-refresh-badge.inactive {
-            background: rgba(100, 116, 139, 0.1);
-            color: var(--text-secondary);
-            border-color: rgba(100, 116, 139, 0.2);
+            background: #e9ecef;
+            color: var(--text-muted);
+            border-color: #dee2e6;
         }
 
         .pulse-dot {
             width: 8px;
             height: 8px;
-            background-color: var(--primary);
+            background-color: var(--secondary);
             border-radius: 50%;
             animation: pulse-animation 2s infinite;
         }
@@ -309,15 +288,15 @@
         }
 
         @keyframes pulse-animation {
-            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.4); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(25, 135, 84, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(25, 135, 84, 0); }
         }
 
         /* TABS VIEWS SYSTEM */
         .tab-panel {
             display: none;
-            animation: fadeIn 0.4s ease-out forwards;
+            animation: fadeIn 0.3s ease-out forwards;
         }
 
         .tab-panel.active {
@@ -325,70 +304,68 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* GLASS CARD STYLING */
+        /* CARDS */
         .glass-card {
             background: var(--bg-glass);
-            backdrop-filter: blur(var(--blur));
-            -webkit-backdrop-filter: blur(var(--blur));
             border: 1px solid var(--border-glass);
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 1.5rem;
             box-shadow: var(--shadow);
             margin-bottom: 1.5rem;
-            position: relative;
-            overflow: hidden;
         }
 
-        /* DASHBOARD CARDS & STATS GRID */
+        .glass-card h3 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.3px;
+        }
+
+        /* KPI SUMMARY METRICS */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .kpi-card {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border-left: 4px solid var(--primary);
         }
 
         .kpi-info h4 {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.35rem;
         }
 
         .kpi-info p {
             font-size: 1.5rem;
             font-weight: 800;
+            color: var(--text-primary);
             letter-spacing: -0.5px;
         }
 
         .kpi-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 14px;
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
-        .kpi-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            color: var(--primary);
+            background: var(--primary-light);
         }
 
         /* CHARTS SECTION */
@@ -396,7 +373,7 @@
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         /* EVENT DETAILS BANNER */
@@ -404,34 +381,35 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
-            margin-top: 1rem;
         }
 
         .info-banner-item {
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--bg-base);
             border: 1px solid var(--border-glass);
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 1rem;
         }
 
         .info-banner-item span {
             display: block;
             font-size: 0.75rem;
-            color: var(--text-secondary);
+            color: var(--text-muted);
+            font-weight: 600;
             margin-bottom: 0.25rem;
         }
 
         .info-banner-item strong {
             font-size: 0.95rem;
             font-weight: 700;
+            color: var(--text-primary);
         }
 
-        /* SEARCH & FILTER CONTROLS */
+        /* FILTER & CONTROLS */
         .filter-section {
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             flex-wrap: wrap;
         }
 
@@ -447,14 +425,16 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
+            width: 16px;
+            height: 16px;
         }
 
         .search-input {
             width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.75rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-glass);
-            background: var(--bg-glass);
+            padding: 0.65rem 1rem 0.65rem 2.5rem;
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            background: #ffffff;
             color: var(--text-primary);
             font-size: 0.875rem;
             outline: none;
@@ -462,14 +442,14 @@
 
         .search-input:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-glow);
+            box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.15);
         }
 
         .select-filter {
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-glass);
-            background: var(--bg-glass);
+            padding: 0.65rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            background: #ffffff;
             color: var(--text-primary);
             font-size: 0.875rem;
             outline: none;
@@ -477,16 +457,11 @@
             min-width: 160px;
         }
 
-        .select-filter option {
-            background-color: var(--bg-base);
-            color: var(--text-primary);
-        }
-
-        /* ADVANCED RESPONSIVE TABLES */
+        /* TABLES */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
-            border-radius: 12px;
+            border-radius: 10px;
             border: 1px solid var(--border-glass);
         }
 
@@ -495,17 +470,18 @@
             border-collapse: collapse;
             text-align: left;
             font-size: 0.875rem;
+            background: #ffffff;
         }
 
         .modern-table th {
-            background: rgba(16, 185, 129, 0.08);
+            background: var(--bg-base);
             color: var(--text-primary);
             font-weight: 700;
             padding: 1rem 1.25rem;
-            border-bottom: 1px solid var(--border-glass);
-            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--border-glass);
+            font-size: 0.8rem;
             text-transform: uppercase;
-            font-size: 0.75rem;
+            letter-spacing: 0.5px;
         }
 
         .modern-table td {
@@ -515,24 +491,24 @@
         }
 
         .modern-table tbody tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--text-primary);
+            background: #fdfdfd;
+            color: #000000;
         }
 
         .badge {
             display: inline-block;
-            padding: 0.25rem 0.6rem;
-            border-radius: 99px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
             font-size: 0.75rem;
             font-weight: 700;
         }
 
-        .badge-success { background: rgba(16, 185, 129, 0.15); color: var(--success); }
-        .badge-danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
-        .badge-warning { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
-        .badge-info { background: rgba(20, 184, 166, 0.15); color: var(--secondary); }
+        .badge-success { background: #d1e7dd; color: #0f5132; }
+        .badge-danger { background: #f8d7da; color: #842029; }
+        .badge-warning { background: #fff3cd; color: #664d03; }
+        .badge-info { background: #cff4fc; color: #087990; }
 
-        /* CONFIGURATION MODAL (SETTINGS) */
+        /* MODAL */
         .modal {
             display: none;
             position: fixed;
@@ -540,8 +516,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
+            background: rgba(33, 37, 41, 0.4);
+            backdrop-filter: blur(4px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -553,21 +529,13 @@
         }
 
         .modal-content {
-            background: var(--bg-glass);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            background: #ffffff;
             border: 1px solid var(--border-glass);
             width: 100%;
-            max-width: 650px;
-            border-radius: 20px;
+            max-width: 600px;
+            border-radius: 14px;
             padding: 2rem;
-            box-shadow: var(--shadow);
-            animation: modalScaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes modalScaleUp {
-            from { transform: scale(0.9) translateY(20px); opacity: 0; }
-            to { transform: scale(1) translateY(0); opacity: 1; }
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .modal-header {
@@ -576,7 +544,7 @@
             align-items: center;
             margin-bottom: 1.5rem;
             border-bottom: 1px solid var(--border-glass);
-            padding-bottom: 1rem;
+            padding-bottom: 0.75rem;
         }
 
         .modal-header h3 {
@@ -590,18 +558,18 @@
 
         .input-group label {
             display: block;
-            font-size: 0.8125rem;
-            font-weight: 600;
+            font-size: 0.8rem;
+            font-weight: 700;
             color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         .input-text {
             width: 100%;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-glass);
-            background: rgba(0, 0, 0, 0.1);
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            background: #ffffff;
             color: var(--text-primary);
             outline: none;
             font-size: 0.875rem;
@@ -609,19 +577,18 @@
 
         .input-text:focus {
             border-color: var(--primary);
-            background: rgba(0, 0, 0, 0.2);
         }
 
         .modal-footer {
             display: flex;
             justify-content: flex-end;
-            gap: 1rem;
+            gap: 0.75rem;
             border-top: 1px solid var(--border-glass);
             padding-top: 1.25rem;
             margin-top: 1.5rem;
         }
 
-        /* CUSTOM TOAST SYSTEM */
+        /* TOAST CONTAINER */
         #toast-container {
             position: fixed;
             bottom: 2rem;
@@ -629,47 +596,42 @@
             z-index: 1100;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
         .toast {
-            background: var(--bg-glass);
-            backdrop-filter: blur(12px);
+            background: #ffffff;
+            border: 1px solid #ced4da;
             border-left: 4px solid var(--primary);
-            border-top: 1px solid var(--border-glass);
-            border-right: 1px solid var(--border-glass);
-            border-bottom: 1px solid var(--border-glass);
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
+            padding: 0.85rem 1.25rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             color: var(--text-primary);
             font-size: 0.875rem;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            animation: slideInLeft 0.3s ease-out forwards;
+            animation: slideIn 0.2s ease-out forwards;
         }
 
-        @keyframes slideInLeft {
-            from { transform: translateX(100%); opacity: 0; }
+        @keyframes slideIn {
+            from { transform: translateX(20px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* MOBILE BOTTOM NAVIGATION */
+        /* NAVIGATION MOBILE CONFIG */
         #mobile-nav {
             display: none;
             position: fixed;
-            bottom: 1.5rem;
-            left: 1.5rem;
-            right: 1.5rem;
-            background: var(--bg-glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: 0.5rem;
-            box-shadow: var(--shadow);
+            bottom: 1.25rem;
+            left: 1.25rem;
+            right: 1.25rem;
+            background: #ffffff;
+            border: 1px solid #ced4da;
+            border-radius: 14px;
+            padding: 0.4rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
             z-index: 99;
             justify-content: space-around;
         }
@@ -678,105 +640,67 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.25rem;
-            color: var(--text-secondary);
+            gap: 0.2rem;
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 0.65rem;
             font-weight: 700;
-            padding: 0.6rem 1rem;
-            border-radius: 14px;
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
             cursor: pointer;
         }
 
         .mobile-nav-item.active {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(20, 184, 166, 0.15));
+            background: var(--primary-light);
             color: var(--primary);
         }
 
-        /* PROGRESS BAR IN TABLES/CARDS */
         .progress-bar-container {
             width: 100%;
             height: 6px;
-            background: rgba(255, 255, 255, 0.05);
+            background: #e9ecef;
             border-radius: 10px;
-            margin-top: 0.5rem;
+            margin-top: 0.4rem;
             overflow: hidden;
         }
 
         .progress-bar-fill {
             height: 100%;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            background: var(--primary);
             border-radius: 10px;
             width: 0%;
-            transition: width 1s ease-out;
         }
 
-        /* MEDIA QUERIES FOR RESPONSIVE DESIGN (MOBILE-FIRST) */
+        /* RESPONSIVE LAYOUT BREAKPOINTS */
         @media (max-width: 1024px) {
-            #sidebar {
-                display: none; /* Hide desktop sidebar */
-            }
-
-            #main-content {
-                margin-left: 0; /* Clear left margin */
-                padding: 1.2rem;
-                padding-bottom: 7.5rem; /* Extends bottom padding for mobile navigation space */
-            }
-
-            #mobile-nav {
-                display: flex; /* Show mobile floating nav */
-            }
-
-            header {
-                padding: 1rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .header-title-area h2 {
-                font-size: 1.2rem;
-            }
-
-            .dashboard-visuals {
-                grid-template-columns: 1fr; /* Stack graphics sequentially */
-            }
+            #sidebar { display: none; }
+            #main-content { margin-left: 0; padding: 1.5rem 1.25rem; padding-bottom: 7.5rem; }
+            #mobile-nav { display: flex; }
+            header { padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+            .dashboard-visuals { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 640px) {
-            .filter-section {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .search-wrapper, .select-filter {
-                width: 100%;
-            }
-
-            .kpi-grid {
-                grid-template-columns: 1fr; /* Stack KPI */
-            }
-            
-            /* Responsive Cards instead of table rows if screen is too narrow */
-            .modern-table th:nth-child(3),
-            .modern-table td:nth-child(3),
-            .modern-table th:nth-child(4),
-            .modern-table td:nth-child(4) {
-                display: none; /* Hide details on ultra-small viewport */
-            }
+            .filter-section { flex-direction: column; align-items: stretch; }
+            .search-wrapper, .select-filter { width: 100%; }
+            .kpi-grid { grid-template-columns: 1fr; }
+            .modern-table th:nth-child(3), .modern-table td:nth-child(3),
+            .modern-table th:nth-child(6), .modern-table td:nth-child(6) { display: none; }
         }
     </style>
 </head>
 <body>
 
     <div id="app-container">
-        <!-- SIDEBAR (DESKTOP) -->
+        <!-- SIDEBAR DESKTOP -->
         <aside id="sidebar">
             <div class="logo-section">
                 <div class="logo-icon">
-                    <i data-lucide="mosque"></i>
+                    <i data-lucide="award"></i>
                 </div>
                 <div class="logo-text">
                     <h1>HAUL V3</h1>
-                    <span>LPJ DIGITAL</span>
+                    <span>LEGER DIGITAL</span>
                 </div>
             </div>
 
@@ -786,211 +710,161 @@
                     <span>Dashboard</span>
                 </div>
                 <div class="nav-item" onclick="switchTab('statistik')" id="nav-statistik">
-                    <i data-lucide="bar-chart-3"></i>
+                    <i data-lucide="map-pin"></i>
                     <span>Statistik Wilayah</span>
                 </div>
                 <div class="nav-item" onclick="switchTab('kas-masuk')" id="nav-kas-masuk">
-                    <i data-lucide="arrow-down-right"></i>
+                    <i data-lucide="plus-circle"></i>
                     <span>Kas Masuk</span>
                 </div>
                 <div class="nav-item" onclick="switchTab('kas-keluar')" id="nav-kas-keluar">
-                    <i data-lucide="arrow-up-right"></i>
+                    <i data-lucide="minus-circle"></i>
                     <span>Kas Keluar</span>
                 </div>
             </nav>
 
-            <div class="sidebar-footer">
-                <button class="btn btn-primary w-full" style="width: 100%;" onclick="openSettingsModal()">
-                    <i data-lucide="settings"></i>
-                    <span>Pengaturan CSV</span>
+            <div>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="openSettingsModal()">
+                    <i data-lucide="database"></i>
+                    <span>Koneksi Google Sheets</span>
                 </button>
             </div>
         </aside>
 
         <!-- MAIN LAYOUT -->
         <main id="main-content">
-            <!-- HEADER AREA -->
+            <!-- HEADER -->
             <header>
                 <div class="header-title-area">
                     <h2 id="display-app-title">LPJ HAUL V3</h2>
-                    <p id="display-app-subtitle">Sistem Informasi Realtime Pertanggungjawaban Keuangan</p>
+                    <p id="display-app-subtitle">Sistem Pertanggungjawaban Realtime</p>
                 </div>
 
                 <div class="header-controls">
-                    <div class="auto-refresh-badge" id="auto-refresh-indicator" onclick="toggleAutoRefresh()" title="Klik untuk mengaktifkan/menonaktifkan auto refresh (60 detik)">
+                    <div class="auto-refresh-badge" id="auto-refresh-indicator" onclick="toggleAutoRefresh()">
                         <div class="pulse-dot" id="auto-refresh-dot"></div>
-                        <span id="auto-refresh-text">Auto Refresh (Aktif)</span>
+                        <span id="auto-refresh-text">Auto Sinkron (Aktif)</span>
                     </div>
 
-                    <button class="icon-btn" onclick="triggerManualFetch()" title="Refresh Data Sekarang">
-                        <i data-lucide="refresh-cw" id="refresh-icon"></i>
-                    </button>
-
-                    <button class="icon-btn" onclick="toggleTheme()" title="Ubah Tema Warna">
-                        <i data-lucide="sun-moon" id="theme-icon"></i>
+                    <button class="icon-btn" onclick="triggerManualFetch()" title="Ambil Data Baru">
+                        <i data-lucide="rotate-cw" id="refresh-icon"></i>
                     </button>
                 </div>
             </header>
 
-            <!-- 1. DASHBOARD VIEW -->
+            <!-- DASHBOARD PANEL -->
             <section id="panel-dashboard" class="tab-panel active">
-                <!-- KPI SUMMARY METRICS -->
                 <div class="kpi-grid">
                     <div class="glass-card kpi-card">
                         <div class="kpi-info">
                             <h4>Total Pemasukan</h4>
-                            <p id="kpi-pemasukan">Rp 0</p>
+                            <p id="kpi-pemasukan" style="color: #0f5132;">Rp 0</p>
                         </div>
-                        <div class="kpi-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
-                            <i data-lucide="trending-up"></i>
-                        </div>
+                        <div class="kpi-icon"><i data-lucide="arrow-up-right"></i></div>
                     </div>
 
-                    <div class="glass-card kpi-card">
+                    <div class="glass-card kpi-card" style="border-left-color: #dc3545;">
                         <div class="kpi-info">
                             <h4>Total Pengeluaran</h4>
-                            <p id="kpi-pengeluaran">Rp 0</p>
+                            <p id="kpi-pengeluaran" style="color: #842029;">Rp 0</p>
                         </div>
-                        <div class="kpi-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
-                            <i data-lucide="trending-down"></i>
-                        </div>
+                        <div class="kpi-icon" style="color: #dc3545; background: #f8d7da;"><i data-lucide="arrow-down-left"></i></div>
                     </div>
 
-                    <div class="glass-card kpi-card">
+                    <div class="glass-card kpi-card" style="border-left-color: #0d6efd;">
                         <div class="kpi-info">
-                            <h4>Saldo Kas</h4>
-                            <p id="kpi-saldo">Rp 0</p>
+                            <h4>Saldo Sisa Kas</h4>
+                            <p id="kpi-saldo" style="color: #0d6efd;">Rp 0</p>
                         </div>
-                        <div class="kpi-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
-                            <i data-lucide="wallet"></i>
-                        </div>
+                        <div class="kpi-icon" style="color: #0d6efd; background: #cff4fc;"><i data-lucide="wallet"></i></div>
                     </div>
                 </div>
 
-                <!-- CHARTS VISUALS -->
                 <div class="dashboard-visuals">
                     <div class="glass-card">
-                        <h3>Tren Transaksi Terkini</h3>
-                        <p style="color: var(--text-secondary); font-size: 0.8125rem; margin-bottom: 1rem;">Visualisasi akumulasi donasi vs pembiayaan</p>
-                        <div style="position: relative; height: 300px; width: 100%;">
+                        <h3>Tren Kumulatif Keuangan</h3>
+                        <div style="position: relative; height: 280px; width: 100%;">
                             <canvas id="mainTrendsChart"></canvas>
                         </div>
                     </div>
 
                     <div class="glass-card">
-                        <h3>Metode Pembayaran</h3>
-                        <p style="color: var(--text-secondary); font-size: 0.8125rem; margin-bottom: 1rem;">Perbandingan Cash vs Transfer</p>
-                        <div style="position: relative; height: 300px; width: 100%; display: flex; justify-content: center;">
+                        <h3>Distribusi Metode</h3>
+                        <div style="position: relative; height: 280px; width: 100%; display: flex; justify-content: center;">
                             <canvas id="paymentMethodsChart"></canvas>
                         </div>
                     </div>
                 </div>
 
-                <!-- EVENT PROFILE BANNER -->
+                <!-- PROFILE INFO -->
                 <div class="glass-card">
-                    <h3 style="display: flex; align-items: center; gap: 0.5rem;">
-                        <i data-lucide="info" style="color: var(--primary);"></i> Detail Profil Penyelenggaraan Haul
-                    </h3>
-                    
+                    <h3 style="color: var(--primary);"><i data-lucide="calendar" style="vertical-align: middle; margin-right: 0.5rem;"></i>Informasi Agenda & Berita Acara</h3>
                     <div class="info-banner-grid">
-                        <div class="info-banner-item">
-                            <span>Tahun Pelaksanaan</span>
-                            <strong id="banner-tahun">-</strong>
-                        </div>
-                        <div class="info-banner-item">
-                            <span>Tanggal Haul</span>
-                            <strong id="banner-tanggal">-</strong>
-                        </div>
-                        <div class="info-banner-item">
-                            <span>Hijriah</span>
-                            <strong id="banner-hijriah">-</strong>
-                        </div>
-                        <div class="info-banner-item">
-                            <span>Tempat Acara</span>
-                            <strong id="banner-tempat">-</strong>
-                        </div>
-                        <div class="info-banner-item">
-                            <span>Bank Penampung</span>
-                            <strong id="banner-bank">-</strong>
-                        </div>
-                        <div class="info-banner-item">
-                            <span>Nomor Rekening</span>
-                            <strong id="banner-norek">-</strong>
-                        </div>
+                        <div class="info-banner-item"><span>Tahun Pelaksanaan</span><strong id="banner-tahun">-</strong></div>
+                        <div class="info-banner-item"><span>Tanggal Acara</span><strong id="banner-tanggal">-</strong></div>
+                        <div class="info-banner-item"><span>Kalender Hijriah</span><strong id="banner-hijriah">-</strong></div>
+                        <div class="info-banner-item"><span>Lokasi Acara</span><strong id="banner-tempat">-</strong></div>
+                        <div class="info-banner-item"><span>Rekening Panitia</span><strong id="banner-bank">-</strong></div>
+                        <div class="info-banner-item"><span>Nomor Rekening</span><strong id="banner-norek">-</strong></div>
                     </div>
-
                     <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                         <div>
-                            <span style="color: var(--text-secondary); font-size: 0.8rem;">Status LPJ:</span>
-                            <span class="badge badge-success" id="banner-status">Menunggu Sinkronisasi</span>
+                            <span style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600;">Status Terkini:</span>
+                            <span class="badge badge-success" id="banner-status">-</span>
                         </div>
                         <button class="btn btn-primary" onclick="generateCompletePDF()">
-                            <i data-lucide="file-down"></i>
-                            <span>Unduh Laporan Lengkap (PDF)</span>
+                            <i data-lucide="download-cloud"></i> Unduh Bundel Dokumen Lengkap (PDF)
                         </button>
                     </div>
                 </div>
             </section>
 
-            <!-- 2. STATISTIK KABUPATEN VIEW -->
+            <!-- STATISTIK PANEL -->
             <section id="panel-statistik" class="tab-panel">
                 <div class="glass-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; gap: 1rem;">
                         <div>
-                            <h3>Statistik Kontribusi Kewilayahan</h3>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Perolehan dana terkumpul dari masing-masing Kabupaten / Distrik</p>
+                            <h3>Rekap Kontribusi Anggaran per Wilayah</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Ringkasan kluster pendapatan daerah administratif</p>
                         </div>
-                        <button class="btn" onclick="exportTableToPDF('stats')">
-                            <i data-lucide="file-text"></i> Ekspor PDF Tabel Ini
-                        </button>
+                        <button class="btn" onclick="exportTableToPDF('stats')"><i data-lucide="printer"></i> Cetak PDF Halaman Ini</button>
                     </div>
-
                     <div class="table-responsive">
                         <table class="modern-table" id="table-stats">
                             <thead>
                                 <tr>
-                                    <th>Kecamatan / Kabupaten</th>
+                                    <th>Kecamatan/Kabupaten</th>
                                     <th>Total Pemasukan</th>
-                                    <th>Metode Transfer</th>
-                                    <th>Metode Cash</th>
+                                    <th>Via Rekening</th>
+                                    <th>Tunai/Cash</th>
                                     <th>Belum Diterima</th>
-                                    <th>Persentase Kontribusi</th>
+                                    <th>Kontribusi</th>
                                 </tr>
                             </thead>
-                            <tbody id="stats-table-body">
-                                <!-- Dinamis dari Javascript -->
-                            </tbody>
+                            <tbody id="stats-table-body"></tbody>
                         </table>
                     </div>
                 </div>
             </section>
 
-            <!-- 3. KAS MASUK VIEW -->
+            <!-- KAS MASUK PANEL -->
             <section id="panel-kas-masuk" class="tab-panel">
                 <div class="glass-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; gap: 1rem;">
                         <div>
-                            <h3>Rincian Kas Masuk / Penerimaan Donasi</h3>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Semua kontribusi donasi yang terverifikasi</p>
+                            <h3>Jurnal Buku Penerimaan (Kas Masuk)</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Log data donasi masuk terverifikasi sistem</p>
                         </div>
-                        <div style="display: flex; gap: 0.75rem;">
-                            <button class="btn" onclick="exportTableToPDF('income')">
-                                <i data-lucide="file-text"></i> Ekspor PDF
-                            </button>
-                        </div>
+                        <button class="btn" onclick="exportTableToPDF('income')"><i data-lucide="printer"></i> Cetak PDF</button>
                     </div>
 
                     <div class="filter-section">
                         <div class="search-wrapper">
                             <i data-lucide="search"></i>
-                            <input type="text" class="search-input" id="search-income" placeholder="Cari nama donatur, domisili, metode, keterangan..." oninput="handleIncomeFilter()">
+                            <input type="text" class="search-input" id="search-income" placeholder="Ketik nama donatur, domisili, penerima..." oninput="handleIncomeFilter()">
                         </div>
-                        <select class="select-filter" id="filter-income-kabupaten" onchange="handleIncomeFilter()">
-                            <option value="">Semua Kabupaten</option>
-                        </select>
-                        <select class="select-filter" id="filter-income-metode" onchange="handleIncomeFilter()">
-                            <option value="">Semua Metode</option>
-                        </select>
+                        <select class="select-filter" id="filter-income-kabupaten" onchange="handleIncomeFilter()"><option value="">Semua Wilayah</option></select>
+                        <select class="select-filter" id="filter-income-metode" onchange="handleIncomeFilter()"><option value="">Semua Metode</option></select>
                     </div>
 
                     <div class="table-responsive">
@@ -998,45 +872,37 @@
                             <thead>
                                 <tr>
                                     <th>Tanggal</th>
-                                    <th>Donatur</th>
-                                    <th>Wilayah / Domisili</th>
+                                    <th>Nama Donatur</th>
+                                    <th>Wilayah Domisili</th>
                                     <th>Nominal</th>
                                     <th>Metode</th>
-                                    <th>Via Penerima</th>
+                                    <th>Via</th>
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
-                            <tbody id="income-table-body">
-                                <!-- Dinamis -->
-                            </tbody>
+                            <tbody id="income-table-body"></tbody>
                         </table>
                     </div>
                 </div>
             </section>
 
-            <!-- 4. KAS KELUAR VIEW -->
+            <!-- KAS KELUAR PANEL -->
             <section id="panel-kas-keluar" class="tab-panel">
                 <div class="glass-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; gap: 1rem;">
                         <div>
-                            <h3>Rincian Pengeluaran / Alokasi Anggaran</h3>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Rekam pembiayaan aktual kepanitiaan</p>
+                            <h3>Jurnal Anggaran Pengeluaran (Kas Keluar)</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Buku pembelanjaan alokasi pos logistik acara</p>
                         </div>
-                        <div style="display: flex; gap: 0.75rem;">
-                            <button class="btn" onclick="exportTableToPDF('expense')">
-                                <i data-lucide="file-text"></i> Ekspor PDF
-                            </button>
-                        </div>
+                        <button class="btn" onclick="exportTableToPDF('expense')"><i data-lucide="printer"></i> Cetak PDF</button>
                     </div>
 
                     <div class="filter-section">
                         <div class="search-wrapper">
                             <i data-lucide="search"></i>
-                            <input type="text" class="search-input" id="search-expense" placeholder="Cari keperluan, penerima, kategori, penanggungjawab..." oninput="handleExpenseFilter()">
+                            <input type="text" class="search-input" id="search-expense" placeholder="Ketik keperluan, penerima, penanggungjawab..." oninput="handleExpenseFilter()">
                         </div>
-                        <select class="select-filter" id="filter-expense-category" onchange="handleExpenseFilter()">
-                            <option value="">Semua Kategori</option>
-                        </select>
+                        <select class="select-filter" id="filter-expense-category" onchange="handleExpenseFilter()"><option value="">Semua Kategori</option></select>
                     </div>
 
                     <div class="table-responsive">
@@ -1046,43 +912,26 @@
                                     <th>Tanggal</th>
                                     <th>Keperluan</th>
                                     <th>Kategori</th>
-                                    <th>Penerima Dana</th>
+                                    <th>Penerima</th>
                                     <th>Nominal</th>
-                                    <th>Disetujui Oleh</th>
+                                    <th>Dibayar Oleh</th>
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
-                            <tbody id="expense-table-body">
-                                <!-- Dinamis -->
-                            </tbody>
+                            <tbody id="expense-table-body"></tbody>
                         </table>
                     </div>
                 </div>
             </section>
         </main>
 
-        <!-- MOBILE FLOATING BOTTOM BAR -->
+        <!-- FLOATING ACTION NAVIGATION MOBILE -->
         <nav id="mobile-nav">
-            <div class="mobile-nav-item active" onclick="switchTab('dashboard')" id="mob-dashboard">
-                <i data-lucide="layout-dashboard"></i>
-                <span>Home</span>
-            </div>
-            <div class="mobile-nav-item" onclick="switchTab('statistik')" id="mob-statistik">
-                <i data-lucide="bar-chart-3"></i>
-                <span>Wilayah</span>
-            </div>
-            <div class="mobile-nav-item" onclick="switchTab('kas-masuk')" id="mob-kas-masuk">
-                <i data-lucide="arrow-down-right"></i>
-                <span>Masuk</span>
-            </div>
-            <div class="mobile-nav-item" onclick="switchTab('kas-keluar')" id="mob-kas-keluar">
-                <i data-lucide="arrow-up-right"></i>
-                <span>Keluar</span>
-            </div>
-            <div class="mobile-nav-item" onclick="openSettingsModal()">
-                <i data-lucide="settings"></i>
-                <span>CSV</span>
-            </div>
+            <div class="mobile-nav-item active" onclick="switchTab('dashboard')" id="mob-dashboard"><i data-lucide="layout-dashboard"></i><span>Home</span></div>
+            <div class="mobile-nav-item" onclick="switchTab('statistik')" id="mob-statistik"><i data-lucide="map-pin"></i><span>Wilayah</span></div>
+            <div class="mobile-nav-item" onclick="switchTab('kas-masuk')" id="mob-kas-masuk"><i data-lucide="plus-circle"></i><span>Masuk</span></div>
+            <div class="mobile-nav-item" onclick="switchTab('kas-keluar')" id="mob-kas-keluar"><i data-lucide="minus-circle"></i><span>Keluar</span></div>
+            <div class="mobile-nav-item" onclick="openSettingsModal()"><i data-lucide="database"></i><span>Config</span></div>
         </nav>
     </div>
 
@@ -1090,186 +939,104 @@
     <div class="modal" id="settings-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Integrasi Google Sheets CSV</h3>
+                <h3>Konektor Google Sheets CSV</h3>
                 <button class="icon-btn" onclick="closeSettingsModal()"><i data-lucide="x"></i></button>
             </div>
             
-            <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.4;">
-                Publikasikan lembar kerja Google Sheets Anda sebagai format CSV (File -> Bagikan -> Publikasikan ke Web -> Pilih sheet spesifik -> Pilih format CSV). Paste URL tautannya di kolom berikut:
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.45;">
+                Pastikan dokumen Google Sheet Anda telah dibagikan secara publik dengan format **"Publikasikan ke Web -> CSV"** untuk masing-masing sheet komponen berikut:
             </p>
 
-            <div class="input-group">
-                <label>URL CSV Pengaturan Event</label>
-                <input type="text" class="input-text" id="url-pengaturan" placeholder="https://docs.google.com/spreadsheets/d/.../pub?gid=...&output=csv">
-            </div>
-
-            <div class="input-group">
-                <label>URL CSV Statistik Kewilayahan</label>
-                <input type="text" class="input-text" id="url-statistik" placeholder="https://docs.google.com/spreadsheets/d/.../pub?gid=...&output=csv">
-            </div>
-
-            <div class="input-group">
-                <label>URL CSV Kas Masuk</label>
-                <input type="text" class="input-text" id="url-masuk" placeholder="https://docs.google.com/spreadsheets/d/.../pub?gid=...&output=csv">
-            </div>
-
-            <div class="input-group">
-                <label>URL CSV Kas Keluar</label>
-                <input type="text" class="input-text" id="url-keluar" placeholder="https://docs.google.com/spreadsheets/d/.../pub?gid=...&output=csv">
-            </div>
+            <div class="input-group"><label>URL CSV Sheet Pengaturan</label><input type="text" class="input-text" id="url-pengaturan"></div>
+            <div class="input-group"><label>URL CSV Sheet Statistik</label><input type="text" class="input-text" id="url-statistik"></div>
+            <div class="input-group"><label>URL CSV Sheet Kas Masuk</label><input type="text" class="input-text" id="url-masuk"></div>
+            <div class="input-group"><label>URL CSV Sheet Kas Keluar</label><input type="text" class="input-text" id="url-keluar"></div>
 
             <div class="modal-footer">
-                <button class="btn" onclick="resetToMockData()" style="border-color: var(--danger); color: var(--danger);">Reset ke Demo Data</button>
+                <button class="btn" onclick="resetToMockData()" style="color: var(--danger); border-color: var(--danger);">Gunakan Demo Data</button>
                 <button class="btn" onclick="closeSettingsModal()">Batal</button>
-                <button class="btn btn-primary" onclick="saveConfigurationAndLoad()">Simpan & Muat Ulang</button>
+                <button class="btn btn-primary" onclick="saveConfigurationAndLoad()">Simpan Tautan & Sinkron</button>
             </div>
         </div>
     </div>
 
-    <!-- TOAST CONTAINER -->
+    <!-- NOTIFIKASI ELEMENT TOAST -->
     <div id="toast-container"></div>
 
     <script>
-        /* APP STATE MANAGEMENT */
+        /* CORE CONTROLLER STATE */
         const state = {
             currentTab: 'dashboard',
-            theme: 'dark',
             autoRefresh: true,
             refreshIntervalId: null,
-            config: {
-                pengaturanUrl: '',
-                statistikUrl: '',
-                masukUrl: '',
-                keluarUrl: ''
-            },
-            data: {
-                pengaturan: {},
-                statistik: [],
-                masuk: [],
-                keluar: []
-            },
-            filteredData: {
-                masuk: [],
-                keluar: []
-            }
+            config: { pengaturanUrl: '', statistikUrl: '', masukUrl: '', keluarUrl: '' },
+            data: { pengaturan: {}, statistik: [], masuk: [], keluar: [] },
+            filteredData: { masuk: [], keluar: [] }
         };
 
-        /* MOCK DATA FALLBACK */
         const mockData = {
             pengaturan: {
-                namalpj: "LPJ HAUL AKBAR V3",
-                subjudul: "Laporan Pertanggungjawaban Realisasi Anggaran Haul",
+                namalpj: "LPJ HAUL AGUNG V3",
+                subjudul: "Laporan Resmi Pertanggungjawaban Finansial Haul Akbar",
                 tahun: "2026",
                 tanggalhaul: "2026-07-25",
                 hijriah: "10 Muharram 1448 H",
                 hari: "Sabtu",
-                tempat: "Halaman Utama Masjid Syiah Kuala",
+                tempat: "Kompleks Utama Masjid Agung Darussalam",
                 bank: "Bank Syariah Indonesia (BSI)",
-                norekening: "711-2200-333",
-                atasnama: "Panitia Haul Agung V3",
+                norekening: "711-8899-000",
+                atasnama: "Bendahara Umum Haul V3",
                 iuranbulanan: "50000",
                 matauang: "IDR",
-                statuslpj: "Rilis Publik",
-                updateterakhir: "2026-07-14 17:50"
+                statuslpj: "Audit Internal Selesai",
+                updateterakhir: "2026-07-14 18:25"
             },
             statistik: [
-                { kabupaten: "Banda Aceh", totalpemasukan: "55000000", viarekening: "45000000", cash: "10000000", belumditerima: "5000000", kontribusi: "91" },
-                { kabupaten: "Aceh Besar", totalpemasukan: "42000000", viarekening: "30000000", cash: "12000000", belumditerima: "8000000", kontribusi: "84" },
-                { kabupaten: "Pidie", totalpemasukan: "28000000", viarekening: "20000000", cash: "8000000", belumditerima: "4000000", kontribusi: "87" },
-                { kabupaten: "Aceh Utara", totalpemasukan: "38000000", viarekening: "28000000", cash: "10000000", belumditerima: "6000000", kontribusi: "86" },
-                { kabupaten: "Aceh Barat", totalpemasukan: "25000000", viarekening: "15000000", cash: "10000000", belumditerima: "5000000", kontribusi: "83" }
+                { kabupaten: "Banda Aceh", totalpemasukan: "62000000", viarekening: "50000000", cash: "12000000", belumditerima: "2000000", kontribusi: "95" },
+                { kabupaten: "Aceh Besar", totalpemasukan: "48000000", viarekening: "38000000", cash: "10000000", belumditerima: "4000000", kontribusi: "90" },
+                { kabupaten: "Pidie", totalpemasukan: "35000000", viarekening: "27000000", cash: "8000000", belumditerima: "3000000", kontribusi: "88" },
+                { kabupaten: "Aceh Utara", totalpemasukan: "41000000", viarekening: "31000000", cash: "10000000", belumditerima: "5000000", kontribusi: "85" }
             ],
             masuk: [
-                { tanggal: "2026-07-01", namadonatur: "H. Sulaiman Al-Fatih", kabupaten: "Banda Aceh", domisili: "Ulee Lheue", nominal: "10000000", metode: "Transfer", via: "BSI", keterangan: "Infaq Hamba Allah" },
-                { tanggal: "2026-07-02", namadonatur: "Hj. Aminah Zahra", kabupaten: "Aceh Besar", domisili: "Lambaro", nominal: "5000000", metode: "Cash", via: "Bendahara", keterangan: "Zakat Mal Keluarga" },
-                { tanggal: "2026-07-03", namadonatur: "Tgk. Hamdan Yusuf", kabupaten: "Pidie", domisili: "Sigli", nominal: "3000000", metode: "Transfer", via: "BSI", keterangan: "Sadaqah Rutin" },
-                { tanggal: "2026-07-05", namadonatur: "CV. Berkah Utama", kabupaten: "Banda Aceh", domisili: "Kuta Alam", nominal: "15000000", metode: "Transfer", via: "BSI", keterangan: "Sponsor Kegiatan" },
-                { tanggal: "2026-07-07", namadonatur: "Kelompok Majelis Taklim", kabupaten: "Aceh Utara", domisili: "Lhoksukon", nominal: "8000000", metode: "Cash", via: "Koordinator", keterangan: "Iuran Anggota" },
-                { tanggal: "2026-07-08", namadonatur: "Drs. H. M. Nasir", kabupaten: "Aceh Barat", domisili: "Meulaboh", nominal: "5000000", metode: "Transfer", via: "BSI", keterangan: "Wakaf" },
-                { tanggal: "2026-07-10", namadonatur: "Keluarga Al-Lateef", kabupaten: "Aceh Besar", domisili: "Darussalam", nominal: "12000000", metode: "Cash", via: "Panitia", keterangan: "Donasi Khusus Konsumsi" }
+                { tanggal: "2026-07-01", namadonatur: "H. Syukri Abdullah", kabupaten: "Banda Aceh", domisili: "Lamprit", nominal: "15000000", metode: "Transfer", via: "BSI", keterangan: "Sumbangan Utama Keluarga" },
+                { tanggal: "2026-07-02", namadonatur: "Hj. Fatimah Zuhra", kabupaten: "Aceh Besar", domisili: "Ketapang", nominal: "7000000", metode: "Cash", via: "Panitia Wilayah", keterangan: "Infaq Tunai Hamba Allah" },
+                { tanggal: "2026-07-04", namadonatur: "Ikatan Alumni Timur Tengah", kabupaten: "Banda Aceh", domisili: "Kopelma", nominal: "25000000", metode: "Transfer", via: "BSI", keterangan: "Donasi Kolektif Anggota" },
+                { tanggal: "2026-07-06", namadonatur: "Tgk. Muslem Daud", kabupaten: "Pidie", domisili: "Beureunuen", nominal: "5000000", metode: "Transfer", via: "BSI", keterangan: "Dana Keagamaan Khusus" }
             ],
             keluar: [
-                { tanggal: "2026-07-04", keperluan: "DP Sewa Tenda & Panggung Utama", kategori: "Perlengkapan", penerima: "CV. Mega Tenda", nominal: "15000000", dibayaroleh: "Bendahara", keterangan: "Sewa 3 Hari" },
-                { tanggal: "2026-07-06", keperluan: "Sewa Sound System & Sound Engineer", kategori: "Perlengkapan", penerima: "Aura Sound", nominal: "8000000", dibayaroleh: "Seksi Acara", keterangan: "Pelunasan" },
-                { tanggal: "2026-07-08", keperluan: "Konsumsi Rapat Pleno Panitia", kategori: "Konsumsi", penerima: "Catering Berkah", nominal: "2500000", dibayaroleh: "Bendahara", keterangan: "Rapat ke-2" },
-                { tanggal: "2026-07-11", keperluan: "Cetak Buku Yasin & Brosur", kategori: "Publikasi", penerima: "Maju Printing", nominal: "6500000", dibayaroleh: "Humas", keterangan: "1000 Eksemplar" },
-                { tanggal: "2026-07-12", keperluan: "Sembako Santunan 100 Anak Yatim", kategori: "Sosial", penerima: "Toko Makmur Sentosa", nominal: "20000000", dibayaroleh: "Seksi Sosial", keterangan: "Paket Lengkap" }
+                { tanggal: "2026-07-03", keperluan: "Panjar Sewa Teratak & Panggung Islami", kategori: "Perlengkapan", penerima: "Rayyan Tenda Group", nominal: "12000000", dibayaroleh: "Seksi Logistik", keterangan: "DP Awal Transaksi" },
+                { tanggal: "2026-07-05", keperluan: "Pembelian Bahan Baku Konsumsi Utama", kategori: "Konsumsi", penerima: "Toko Grosir Berkah", nominal: "18500000", dibayaroleh: "Bendahara Acara", keterangan: "Lunas" },
+                { tanggal: "2026-07-07", keperluan: "Cetak Kitab Doa & Buku Panduan Jamaah", kategori: "Publikasi", penerima: "Sinar Grafika", nominal: "6000000", dibayaroleh: "Humas & Dokumentasi", keterangan: "500 Buku Cetak" }
             ]
         };
 
-        /* INITIALIZATION ON DOM READY */
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            initTheme();
             loadConfigFromStorage();
             fetchData();
             setupAutoRefresh();
         });
 
-        /* THEME MANAGEMENT */
-        function initTheme() {
-            const savedTheme = localStorage.getItem('lpj_theme') || 'dark';
-            setTheme(savedTheme);
-        }
-
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme') || 'dark';
-            const next = current === 'dark' ? 'light' : 'dark';
-            setTheme(next);
-        }
-
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            state.theme = theme;
-            localStorage.setItem('lpj_theme', theme);
-            
-            // Toggle icon
-            const themeIcon = document.getElementById('theme-icon');
-            if (themeIcon) {
-                if (theme === 'light') {
-                    themeIcon.setAttribute('data-lucide', 'sun');
-                } else {
-                    themeIcon.setAttribute('data-lucide', 'moon');
-                }
-                lucide.createIcons();
-            }
-        }
-
-        /* TAB NAVIGATION SYSTEM */
         function switchTab(tabName) {
             state.currentTab = tabName;
-            
-            // Update Active Panels
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-            const targetedPanel = document.getElementById(`panel-${tabName}`);
-            if (targetedPanel) targetedPanel.classList.add('active');
+            document.getElementById(`panel-${tabName}`)?.classList.add('active');
 
-            // Update Active Navs (Desktop)
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            const targetedNav = document.getElementById(`nav-${tabName}`);
-            if (targetedNav) targetedNav.classList.add('active');
+            document.getElementById(`nav-${tabName}`)?.classList.add('active');
 
-            // Update Active Navs (Mobile)
             document.querySelectorAll('.mobile-nav-item').forEach(mn => mn.classList.remove('active'));
-            const targetedMob = document.getElementById(`mob-${tabName}`);
-            if (targetedMob) targetedMob.classList.add('active');
+            document.getElementById(`mob-${tabName}`)?.classList.add('active');
 
-            showToast(`Membuka halaman ${tabName.toUpperCase().replace('-', ' ')}`);
-            
-            // Re-render chart if navigating back to dashboard to ensure responsiveness
-            if (tabName === 'dashboard') {
-                renderCharts();
-            }
+            if (tabName === 'dashboard') renderCharts();
         }
 
-        /* STORAGE & INTEGRATION LOGIC */
         function loadConfigFromStorage() {
             state.config.pengaturanUrl = localStorage.getItem('lpj_url_pengaturan') || '';
             state.config.statistikUrl = localStorage.getItem('lpj_url_statistik') || '';
             state.config.masukUrl = localStorage.getItem('lpj_url_masuk') || '';
             state.config.keluarUrl = localStorage.getItem('lpj_url_keluar') || '';
 
-            // Prefill modal
             document.getElementById('url-pengaturan').value = state.config.pengaturanUrl;
             document.getElementById('url-statistik').value = state.config.statistikUrl;
             document.getElementById('url-masuk').value = state.config.masukUrl;
@@ -1277,201 +1044,115 @@
         }
 
         function saveConfigurationAndLoad() {
-            const pu = document.getElementById('url-pengaturan').value.trim();
-            const su = document.getElementById('url-statistik').value.trim();
-            const mu = document.getElementById('url-masuk').value.trim();
-            const ku = document.getElementById('url-keluar').value.trim();
+            state.config.pengaturanUrl = document.getElementById('url-pengaturan').value.trim();
+            state.config.statistikUrl = document.getElementById('url-statistik').value.trim();
+            state.config.masukUrl = document.getElementById('url-masuk').value.trim();
+            state.config.keluarUrl = document.getElementById('url-keluar').value.trim();
 
-            localStorage.setItem('lpj_url_pengaturan', pu);
-            localStorage.setItem('lpj_url_statistik', su);
-            localStorage.setItem('lpj_url_masuk', mu);
-            localStorage.setItem('lpj_url_keluar', ku);
-
-            state.config.pengaturanUrl = pu;
-            state.config.statistikUrl = su;
-            state.config.masukUrl = mu;
-            state.config.keluarUrl = ku;
+            localStorage.setItem('lpj_url_pengaturan', state.config.pengaturanUrl);
+            localStorage.setItem('lpj_url_statistik', state.config.statistikUrl);
+            localStorage.setItem('lpj_url_masuk', state.config.masukUrl);
+            localStorage.setItem('lpj_url_keluar', state.config.keluarUrl);
 
             closeSettingsModal();
-            showToast("Konfigurasi disimpan! Memulai pemuatan data...", "info");
+            showToast("Konfigurasi diubah. Memperbarui pangkalan data...", "info");
             fetchData();
         }
 
         function resetToMockData() {
-            localStorage.removeItem('lpj_url_pengaturan');
-            localStorage.removeItem('lpj_url_statistik');
-            localStorage.removeItem('lpj_url_masuk');
-            localStorage.removeItem('lpj_url_keluar');
-
+            localStorage.clear();
             state.config = { pengaturanUrl: '', statistikUrl: '', masukUrl: '', keluarUrl: '' };
-            
             document.getElementById('url-pengaturan').value = '';
             document.getElementById('url-statistik').value = '';
             document.getElementById('url-masuk').value = '';
             document.getElementById('url-keluar').value = '';
-
             closeSettingsModal();
-            showToast("Berhasil kembali ke mode Demo Data!", "success");
+            showToast("Kembali ke mode demo data bawaan.", "success");
             fetchData();
         }
 
-        /* MODAL CONTROLS */
-        function openSettingsModal() {
-            document.getElementById('settings-modal').classList.add('active');
-        }
+        function openSettingsModal() { document.getElementById('settings-modal').classList.add('active'); }
+        function closeSettingsModal() { document.getElementById('settings-modal').classList.remove('active'); }
 
-        function closeSettingsModal() {
-            document.getElementById('settings-modal').classList.remove('active');
-        }
-
-        /* VANILLA RESILIENT CSV PARSER */
         function parseCSV(text) {
-            let lines = [];
-            let row = [""];
-            let inQuotes = false;
+            let lines = []; let row = [""]; let inQuotes = false;
             for (let i = 0; i < text.length; i++) {
-                let c = text[i];
-                let next = text[i+1];
+                let c = text[i]; let next = text[i+1];
                 if (c === '"') {
                     if (inQuotes && next === '"') { row[row.length - 1] += '"'; i++; }
                     else { inQuotes = !inQuotes; }
-                } else if (c === ',' && !inQuotes) {
-                    row.push('');
-                } else if ((c === '\r' || c === '\n') && !inQuotes) {
+                } else if (c === ',' && !inQuotes) { row.push(''); }
+                else if ((c === '\r' || c === '\n') && !inQuotes) {
                     if (c === '\r' && next === '\n') { i++; }
-                    lines.push(row);
-                    row = [''];
-                } else {
-                    row[row.length - 1] += c;
-                }
+                    lines.push(row); row = [''];
+                } else { row[row.length - 1] += c; }
             }
             if (row.length > 1 || row[0] !== '') { lines.push(row); }
             return lines;
         }
 
-        /* SAFE OBJECT MAPPER BASED ON HEADERS (CASE INSENSITIVE) */
         function cleanHeadersAndMap(rows) {
             if (!rows || rows.length < 2) return [];
             const headers = rows[0].map(h => h.trim().toLowerCase().replace(/\s+/g, ''));
             const result = [];
-            
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
                 if (row.length === 0 || (row.length === 1 && row[0] === '')) continue;
                 const obj = {};
-                headers.forEach((h, index) => {
-                    obj[h] = row[index] ? row[index].trim() : '';
-                });
+                headers.forEach((h, index) => { obj[h] = row[index] ? row[index].trim() : ''; });
                 result.push(obj);
             }
             return result;
         }
 
-        /* DATA FETCHING ENGINE */
         async function fetchData() {
-            const refreshIcon = document.getElementById('refresh-icon');
-            if (refreshIcon) refreshIcon.classList.add('fa-spin', 'rotate-animation'); // Visual animation fallback
+            const icon = document.getElementById('refresh-icon');
+            if (icon) icon.style.transform = "rotate(360deg)";
             
-            showToast("Sedang mensinkronisasikan data...", "info");
+            let networkError = false;
 
-            let hasErrors = false;
-
-            // Load Pengaturan
             if (state.config.pengaturanUrl) {
                 try {
-                    const res = await fetchWithRetry(state.config.pengaturanUrl);
-                    const parsed = cleanHeadersAndMap(parseCSV(res));
-                    if (parsed && parsed.length > 0) state.data.pengaturan = parsed[0];
-                } catch (e) {
-                    hasErrors = true;
-                }
-            } else {
-                state.data.pengaturan = { ...mockData.pengaturan };
-            }
+                    const res = await fetch(state.config.pengaturanUrl).then(r => r.text());
+                    state.data.pengaturan = cleanHeadersAndMap(parseCSV(res))[0] || {};
+                } catch(e) { networkError = true; }
+            } else { state.data.pengaturan = {...mockData.pengaturan}; }
 
-            // Load Statistik
             if (state.config.statistikUrl) {
                 try {
-                    const res = await fetchWithRetry(state.config.statistikUrl);
+                    const res = await fetch(state.config.statistikUrl).then(r => r.text());
                     state.data.statistik = cleanHeadersAndMap(parseCSV(res));
-                } catch (e) {
-                    hasErrors = true;
-                }
-            } else {
-                state.data.statistik = [ ...mockData.statistik ];
-            }
+                } catch(e) { networkError = true; }
+            } else { state.data.statistik = [...mockData.statistik]; }
 
-            // Load Kas Masuk
             if (state.config.masukUrl) {
                 try {
-                    const res = await fetchWithRetry(state.config.masukUrl);
+                    const res = await fetch(state.config.masukUrl).then(r => r.text());
                     state.data.masuk = cleanHeadersAndMap(parseCSV(res));
-                } catch (e) {
-                    hasErrors = true;
-                }
-            } else {
-                state.data.masuk = [ ...mockData.masuk ];
-            }
+                } catch(e) { networkError = true; }
+            } else { state.data.masuk = [...mockData.masuk]; }
 
-            // Load Kas Keluar
             if (state.config.keluarUrl) {
                 try {
-                    const res = await fetchWithRetry(state.config.keluarUrl);
+                    const res = await fetch(state.config.keluarUrl).then(r => r.text());
                     state.data.keluar = cleanHeadersAndMap(parseCSV(res));
-                } catch (e) {
-                    hasErrors = true;
-                }
-            } else {
-                state.data.keluar = [ ...mockData.keluar ];
-            }
+                } catch(e) { networkError = true; }
+            } else { state.data.keluar = [...mockData.keluar]; }
 
-            if (hasErrors) {
-                showToast("Gagal memuat beberapa Google Sheet. Menggunakan cadangan lokal.", "warning");
-            } else {
-                showToast("Sinkronisasi real-time berhasil diperbarui!", "success");
-            }
+            if (networkError) showToast("Koneksi gagal. Mengaktifkan proteksi data lokal.", "warning");
+            else showToast("Data berhasil disinkronkan langsung.", "success");
 
-            // Copy to filter state
             state.filteredData.masuk = [...state.data.masuk];
             state.filteredData.keluar = [...state.data.keluar];
 
-            // Re-render UI
             updateUI();
-
-            if (refreshIcon) {
-                setTimeout(() => {
-                    refreshIcon.classList.remove('fa-spin', 'rotate-animation');
-                }, 1000);
-            }
+            if (icon) setTimeout(() => icon.style.transform = "none", 400);
         }
 
-        /* FETCH RETRY IMPLEMENTATION WITH EXPONENTIAL BACKOFF */
-        async function fetchWithRetry(url, retries = 5, delay = 1000) {
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error("HTTP " + response.status);
-                    return await response.text();
-                } catch (err) {
-                    if (i === retries - 1) throw err;
-                    await new Promise(res => setTimeout(res, delay));
-                    delay *= 2; // Exponential growth
-                }
-            }
-        }
+        function triggerManualFetch() { fetchData(); }
 
-        /* MANUAL REFRESH TRIGGER */
-        function triggerManualFetch() {
-            fetchData();
-        }
-
-        /* AUTO REFRESH SCHEDULER */
         function setupAutoRefresh() {
-            if (state.autoRefresh) {
-                state.refreshIntervalId = setInterval(() => {
-                    fetchData();
-                }, 60000); // 60 seconds
-            }
+            state.refreshIntervalId = setInterval(() => { if (state.autoRefresh) fetchData(); }, 60000);
         }
 
         function toggleAutoRefresh() {
@@ -1479,759 +1160,285 @@
             const ind = document.getElementById('auto-refresh-indicator');
             const dot = document.getElementById('auto-refresh-dot');
             const txt = document.getElementById('auto-refresh-text');
-
             if (state.autoRefresh) {
-                ind.classList.remove('inactive');
-                dot.classList.remove('inactive');
-                txt.textContent = 'Auto Refresh (Aktif)';
-                setupAutoRefresh();
-                showToast("Auto refresh 60 detik diaktifkan.");
+                ind.classList.remove('inactive'); dot.classList.remove('inactive'); txt.textContent = 'Auto Sinkron (Aktif)';
+                showToast("Sinkronisasi otomatis aktif.");
             } else {
-                ind.classList.add('inactive');
-                dot.classList.add('inactive');
-                txt.textContent = 'Auto Refresh (Mati)';
-                if (state.refreshIntervalId) {
-                    clearInterval(state.refreshIntervalId);
-                    state.refreshIntervalId = null;
-                }
-                showToast("Auto refresh dinonaktifkan.");
+                ind.classList.add('inactive'); dot.classList.add('inactive'); txt.textContent = 'Auto Sinkron (Mati)';
+                showToast("Sinkronisasi otomatis dinonaktifkan.");
             }
         }
 
-        /* REALTIME CALCULATION & INTERACTIVE UI SYNC */
         function updateUI() {
-            // Update Header & General Info
-            const settings = state.data.pengaturan;
-            document.getElementById('display-app-title').textContent = settings.namalpj || "LPJ HAUL V3";
-            document.getElementById('display-app-subtitle').textContent = settings.subjudul || "Sistem Informasi Laporan Pertanggungjawaban";
+            const sett = state.data.pengaturan;
+            document.getElementById('display-app-title').textContent = sett.namalpj || "LPJ HAUL V3";
+            document.getElementById('display-app-subtitle').textContent = sett.subjudul || "Sistem Keuangan Acara";
             
-            // Banner profile
-            document.getElementById('banner-tahun').textContent = settings.tahun || "-";
-            document.getElementById('banner-tanggal').textContent = formatDate(settings.tanggalhaul);
-            document.getElementById('banner-hijriah').textContent = settings.hijriah || "-";
-            document.getElementById('banner-tempat').textContent = settings.tempat || "-";
-            document.getElementById('banner-bank').textContent = settings.bank || "-";
-            document.getElementById('banner-norek').textContent = settings.norekening || "-";
-            document.getElementById('banner-status').textContent = settings.statuslpj || "Aktif";
+            document.getElementById('banner-tahun').textContent = sett.tahun || "-";
+            document.getElementById('banner-tanggal').textContent = formatDate(sett.tanggalhaul);
+            document.getElementById('banner-hijriah').textContent = sett.hijriah || "-";
+            document.getElementById('banner-tempat').textContent = sett.tempat || "-";
+            document.getElementById('banner-bank').textContent = sett.bank || "-";
+            document.getElementById('banner-norek').textContent = sett.norekening || "-";
+            document.getElementById('banner-status').textContent = sett.statuslpj || "Aktif";
 
-            // Process Keuangan
-            let totalMasuk = 0;
-            state.data.masuk.forEach(row => {
-                totalMasuk += parseFloat(row.nominal || 0);
-            });
+            let inSum = 0; state.data.masuk.forEach(r => inSum += parseFloat(r.nominal || 0));
+            let exSum = 0; state.data.keluar.forEach(r => exSum += parseFloat(r.nominal || 0));
 
-            let totalKeluar = 0;
-            state.data.keluar.forEach(row => {
-                totalKeluar += parseFloat(row.nominal || 0);
-            });
+            document.getElementById('kpi-pemasukan').textContent = formatIDR(inSum);
+            document.getElementById('kpi-pengeluaran').textContent = formatIDR(exSum);
+            document.getElementById('kpi-saldo').textContent = formatIDR(inSum - exSum);
 
-            const saldo = totalMasuk - totalKeluar;
-
-            // Render KPI Cards
-            document.getElementById('kpi-pemasukan').textContent = formatIDR(totalMasuk);
-            document.getElementById('kpi-pengeluaran').textContent = formatIDR(totalKeluar);
-            document.getElementById('kpi-saldo').textContent = formatIDR(saldo);
-
-            // Populate Filter Option Lists (Dynamically from CSV contents)
-            populateFilterOptions();
-
-            // Render Tables
+            buildFilters();
             renderStatsTable();
             renderIncomeTable();
             renderExpenseTable();
-
-            // Render Visual Charts
             renderCharts();
         }
 
-        function populateFilterOptions() {
-            // Kabupaten
-            const kabFilter = document.getElementById('filter-income-kabupaten');
-            const currentKabVal = kabFilter.value;
-            kabFilter.innerHTML = '<option value="">Semua Kabupaten</option>';
-            const uniqueKab = [...new Set(state.data.masuk.map(m => m.kabupaten))].filter(Boolean);
-            uniqueKab.forEach(k => {
-                const opt = document.createElement('option');
-                opt.value = k;
-                opt.textContent = k;
-                if (k === currentKabVal) opt.selected = true;
-                kabFilter.appendChild(opt);
+        function buildFilters() {
+            const kabF = document.getElementById('filter-income-kabupaten');
+            const valK = kabF.value;
+            kabF.innerHTML = '<option value="">Semua Wilayah</option>';
+            [...new Set(state.data.masuk.map(m => m.kabupaten))].filter(Boolean).forEach(k => {
+                kabF.innerHTML += `<option value="${k}" ${k===valK?'selected':''}>${k}</option>`;
             });
 
-            // Metode Kas Masuk
-            const metFilter = document.getElementById('filter-income-metode');
-            const currentMetVal = metFilter.value;
-            metFilter.innerHTML = '<option value="">Semua Metode</option>';
-            const uniqueMet = [...new Set(state.data.masuk.map(m => m.metode))].filter(Boolean);
-            uniqueMet.forEach(m => {
-                const opt = document.createElement('option');
-                opt.value = m;
-                opt.textContent = m;
-                if (m === currentMetVal) opt.selected = true;
-                metFilter.appendChild(opt);
+            const metF = document.getElementById('filter-income-metode');
+            const valM = metF.value;
+            metF.innerHTML = '<option value="">Semua Metode</option>';
+            [...new Set(state.data.masuk.map(m => m.metode))].filter(Boolean).forEach(m => {
+                metF.innerHTML += `<option value="${m}" ${m===valM?'selected':''}>${m}</option>`;
             });
 
-            // Kategori Kas Keluar
-            const catFilter = document.getElementById('filter-expense-category');
-            const currentCatVal = catFilter.value;
-            catFilter.innerHTML = '<option value="">Semua Kategori</option>';
-            const uniqueCat = [...new Set(state.data.keluar.map(k => k.kategori))].filter(Boolean);
-            uniqueCat.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c;
-                opt.textContent = c;
-                if (c === currentCatVal) opt.selected = true;
-                catFilter.appendChild(opt);
+            const catF = document.getElementById('filter-expense-category');
+            const valC = catF.value;
+            catF.innerHTML = '<option value="">Semua Kategori</option>';
+            [...new Set(state.data.keluar.map(k => k.kategori))].filter(Boolean).forEach(c => {
+                catF.innerHTML += `<option value="${c}" ${c===valC?'selected':''}>${c}</option>`;
             });
         }
 
-        /* TABLES RENDER MECHANISMS */
         function renderStatsTable() {
-            const tbody = document.getElementById('stats-table-body');
-            tbody.innerHTML = '';
-            
-            if (state.data.statistik.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">Tidak ada data statistik wilayah. Hubungkan Google Sheet Anda.</td></tr>`;
-                return;
-            }
-
+            const body = document.getElementById('stats-table-body');
+            body.innerHTML = '';
             state.data.statistik.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${row.kabupaten || '-'}</strong></td>
-                    <td>${formatIDR(row.totalpemasukan)}</td>
-                    <td>${formatIDR(row.viarekening)}</td>
-                    <td>${formatIDR(row.cash)}</td>
-                    <td style="color: var(--danger); font-weight: 600;">${formatIDR(row.belumditerima)}</td>
-                    <td>
-                        <div style="display: flex; align-items: center; gap: 0.5rem; width: 100px;">
-                            <span>${row.kontribusi || '0'}%</span>
-                            <div class="progress-bar-container" style="flex-grow:1;">
-                                <div class="progress-bar-fill" style="width: ${row.kontribusi || 0}%;"></div>
+                body.innerHTML += `
+                    <tr>
+                        <td><strong>${row.kabupaten || '-'}</strong></td>
+                        <td>${formatIDR(row.totalpemasukan)}</td>
+                        <td>${formatIDR(row.viarekening)}</td>
+                        <td>${formatIDR(row.cash)}</td>
+                        <td style="color:var(--danger); font-weight:700;">${formatIDR(row.belumditerima)}</td>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:0.5rem; width:100px;">
+                                <span>${row.kontribusi || '0'}%</span>
+                                <div class="progress-bar-container" style="flex-grow:1;"><div class="progress-bar-fill" style="width:${row.kontribusi||0}%"></div></div>
                             </div>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+                        </td>
+                    </tr>`;
             });
         }
 
         function renderIncomeTable() {
-            const tbody = document.getElementById('income-table-body');
-            tbody.innerHTML = '';
-
-            if (state.filteredData.masuk.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 2rem 0;">Data tidak ditemukan atau filter tidak sesuai.</td></tr>`;
-                return;
-            }
-
+            const body = document.getElementById('income-table-body'); body.innerHTML = '';
             state.filteredData.masuk.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${formatDate(row.tanggal)}</td>
-                    <td><strong>${row.namadonatur || '-'}</strong></td>
-                    <td>${row.kabupaten || '-'} (${row.domisili || '-'})</td>
-                    <td style="color: var(--success); font-weight: 700;">${formatIDR(row.nominal)}</td>
-                    <td><span class="badge ${row.metode?.toLowerCase() === 'transfer' ? 'badge-info' : 'badge-success'}">${row.metode || '-'}</span></td>
-                    <td>${row.via || '-'}</td>
-                    <td><span style="font-size: 0.8rem; color: var(--text-muted);">${row.keterangan || '-'}</span></td>
-                `;
-                tbody.appendChild(tr);
+                body.innerHTML += `
+                    <tr>
+                        <td>${formatDate(row.tanggal)}</td>
+                        <td><strong>${row.namadonatur || '-'}</strong></td>
+                        <td>${row.kabupaten || '-'} (${row.domisili || '-'})</td>
+                        <td style="color:var(--success); font-weight:700;">${formatIDR(row.nominal)}</td>
+                        <td><span class="badge badge-success">${row.metode || '-'}</span></td>
+                        <td>${row.via || '-'}</td>
+                        <td style="font-size:0.8rem; color:var(--text-muted);">${row.keterangan || '-'}</td>
+                    </tr>`;
             });
         }
 
         function renderExpenseTable() {
-            const tbody = document.getElementById('expense-table-body');
-            tbody.innerHTML = '';
-
-            if (state.filteredData.keluar.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 2rem 0;">Data tidak ditemukan atau filter tidak sesuai.</td></tr>`;
-                return;
-            }
-
+            const body = document.getElementById('expense-table-body'); body.innerHTML = '';
             state.filteredData.keluar.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${formatDate(row.tanggal)}</td>
-                    <td><strong>${row.keperluan || '-'}</strong></td>
-                    <td><span class="badge badge-warning">${row.kategori || '-'}</span></td>
-                    <td>${row.penerima || '-'}</td>
-                    <td style="color: var(--danger); font-weight: 700;">${formatIDR(row.nominal)}</td>
-                    <td>${row.dibayaroleh || '-'}</td>
-                    <td><span style="font-size: 0.8rem; color: var(--text-muted);">${row.keterangan || '-'}</span></td>
-                `;
-                tbody.appendChild(tr);
+                body.innerHTML += `
+                    <tr>
+                        <td>${formatDate(row.tanggal)}</td>
+                        <td><strong>${row.keperluan || '-'}</strong></td>
+                        <td><span class="badge badge-warning">${row.kategori || '-'}</span></td>
+                        <td>${row.penerima || '-'}</td>
+                        <td style="color:var(--danger); font-weight:700;">${formatIDR(row.nominal)}</td>
+                        <td>${row.dibayaroleh || '-'}</td>
+                        <td style="font-size:0.8rem; color:var(--text-muted);">${row.keterangan || '-'}</td>
+                    </tr>`;
             });
         }
 
-        /* REAL-TIME CLIENT-SIDE SEARCH & FILTERING */
         function handleIncomeFilter() {
-            const searchVal = document.getElementById('search-income').value.toLowerCase();
-            const kabFilter = document.getElementById('filter-income-kabupaten').value;
-            const metFilter = document.getElementById('filter-income-metode').value;
-
-            state.filteredData.masuk = state.data.masuk.filter(row => {
-                const matchesSearch = 
-                    (row.namadonatur || '').toLowerCase().includes(searchVal) ||
-                    (row.domisili || '').toLowerCase().includes(searchVal) ||
-                    (row.keterangan || '').toLowerCase().includes(searchVal) ||
-                    (row.via || '').toLowerCase().includes(searchVal);
-
-                const matchesKab = !kabFilter || row.kabupaten === kabFilter;
-                const matchesMet = !metFilter || row.metode === metFilter;
-
-                return matchesSearch && matchesKab && matchesMet;
+            const s = document.getElementById('search-income').value.toLowerCase();
+            const k = document.getElementById('filter-income-kabupaten').value;
+            const m = document.getElementById('filter-income-metode').value;
+            state.filteredData.masuk = state.data.masuk.filter(r => {
+                return ((r.namadonatur||'').toLowerCase().includes(s) || (r.domisili||'').toLowerCase().includes(s)) && (!k || r.kabupaten === k) && (!m || r.metode === m);
             });
-
             renderIncomeTable();
         }
 
         function handleExpenseFilter() {
-            const searchVal = document.getElementById('search-expense').value.toLowerCase();
-            const catFilter = document.getElementById('filter-expense-category').value;
-
-            state.filteredData.keluar = state.data.keluar.filter(row => {
-                const matchesSearch = 
-                    (row.keperluan || '').toLowerCase().includes(searchVal) ||
-                    (row.penerima || '').toLowerCase().includes(searchVal) ||
-                    (row.keterangan || '').toLowerCase().includes(searchVal) ||
-                    (row.dibayaroleh || '').toLowerCase().includes(searchVal);
-
-                const matchesCat = !catFilter || row.kategori === catFilter;
-
-                return matchesSearch && matchesCat;
+            const s = document.getElementById('search-expense').value.toLowerCase();
+            const c = document.getElementById('filter-expense-category').value;
+            state.filteredData.keluar = state.data.keluar.filter(r => {
+                return ((r.keperluan||'').toLowerCase().includes(s) || (r.penerima||'').toLowerCase().includes(s)) && (!c || r.kategori === c);
             });
-
             renderExpenseTable();
         }
 
-        /* CHARTJS CHARTS SYSTEM */
-        let trendsChartInstance = null;
-        let paymentChartInstance = null;
-
+        let chartInstance1 = null; let chartInstance2 = null;
         function renderCharts() {
-            // Destroy existing charts to reload properly
-            if (trendsChartInstance) trendsChartInstance.destroy();
-            if (paymentChartInstance) paymentChartInstance.destroy();
+            if(chartInstance1) chartInstance1.destroy();
+            if(chartInstance2) chartInstance2.destroy();
 
-            const isLight = state.theme === 'light';
-            const gridColor = isLight ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.05)';
-            const textThemeColor = isLight ? '#0f172a' : '#f8fafc';
+            const dates = [...new Set([...state.data.masuk.map(m=>m.tanggal), ...state.data.keluar.map(k=>k.tanggal)])].sort();
+            let sumIn = 0; let sumEx = 0;
+            const flowIn = []; const flowEx = [];
 
-            // Chart 1: Accumulated Daily Trends
-            const dailyDataMap = {};
-            state.data.masuk.forEach(item => {
-                const d = item.tanggal;
-                if (!dailyDataMap[d]) dailyDataMap[d] = { masuk: 0, keluar: 0 };
-                dailyDataMap[d].masuk += parseFloat(item.nominal || 0);
-            });
-            state.data.keluar.forEach(item => {
-                const d = item.tanggal;
-                if (!dailyDataMap[d]) dailyDataMap[d] = { masuk: 0, keluar: 0 };
-                dailyDataMap[d].keluar += parseFloat(item.nominal || 0);
+            dates.forEach(d => {
+                state.data.masuk.filter(m=>m.tanggal===d).forEach(m=> sumIn += parseFloat(m.nominal||0));
+                state.data.keluar.filter(k=>k.tanggal===d).forEach(k=> sumEx += parseFloat(k.nominal||0));
+                flowIn.push(sumIn); flowEx.push(sumEx);
             });
 
-            const sortedDates = Object.keys(dailyDataMap).sort();
-            const accumMasuk = [];
-            const accumKeluar = [];
-            let currentMasuk = 0;
-            let currentKeluar = 0;
-
-            sortedDates.forEach(d => {
-                currentMasuk += dailyDataMap[d].masuk;
-                currentKeluar += dailyDataMap[d].keluar;
-                accumMasuk.push(currentMasuk);
-                accumKeluar.push(currentKeluar);
-            });
-
-            const trendsCtx = document.getElementById('mainTrendsChart').getContext('2d');
-            trendsChartInstance = new Chart(trendsCtx, {
+            chartInstance1 = new Chart(document.getElementById('mainTrendsChart').getContext('2d'), {
                 type: 'line',
                 data: {
-                    labels: sortedDates.map(d => formatDateShort(d)),
+                    labels: dates.map(d=>formatDateShort(d)),
                     datasets: [
-                        {
-                            label: 'Akumulasi Pemasukan',
-                            data: accumMasuk,
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.05)',
-                            fill: true,
-                            tension: 0.3
-                        },
-                        {
-                            label: 'Akumulasi Pengeluaran',
-                            data: accumKeluar,
-                            borderColor: '#ef4444',
-                            backgroundColor: 'rgba(239, 68, 68, 0.05)',
-                            fill: true,
-                            tension: 0.3
-                        }
+                        { label:'Pemasukan', data:flowIn, borderColor:'#198754', backgroundColor:'rgba(25,135,84,0.05)', fill:true, tension:0.1 },
+                        { label:'Pengeluaran', data:flowEx, borderColor:'#dc3545', backgroundColor:'rgba(220,53,69,0.05)', fill:true, tension:0.1 }
                     ]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { labels: { color: textThemeColor, font: { family: 'Plus Jakarta Sans' } } }
-                    },
-                    scales: {
-                        x: { grid: { color: gridColor }, ticks: { color: textThemeColor } },
-                        y: { grid: { color: gridColor }, ticks: { color: textThemeColor } }
-                    }
-                }
+                options: { responsive:true, maintainAspectRatio:false }
             });
 
-            // Chart 2: Methods Distribution (Cash vs Transfer)
-            let totalTransfer = 0;
-            let totalCash = 0;
+            let tf = 0; let cs = 0;
+            state.data.masuk.forEach(r => { if(r.metode?.toLowerCase().includes('transfer')) tf += parseFloat(r.nominal||0); else cs += parseFloat(r.nominal||0); });
 
-            state.data.masuk.forEach(row => {
-                if (row.metode?.toLowerCase().includes('transfer')) {
-                    totalTransfer += parseFloat(row.nominal || 0);
-                } else {
-                    totalCash += parseFloat(row.nominal || 0);
-                }
-            });
-
-            const paymentCtx = document.getElementById('paymentMethodsChart').getContext('2d');
-            paymentChartInstance = new Chart(paymentCtx, {
+            chartInstance2 = new Chart(document.getElementById('paymentMethodsChart').getContext('2d'), {
                 type: 'doughnut',
-                data: {
-                    labels: ['Transfer Rekening', 'Cash / Tunai'],
-                    datasets: [{
-                        data: [totalTransfer, totalCash],
-                        backgroundColor: ['#14b8a6', '#10b981'],
-                        borderColor: isLight ? '#f1f5f9' : '#0f172a',
-                        borderWidth: 3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { 
-                            position: 'bottom',
-                            labels: { color: textThemeColor, font: { family: 'Plus Jakarta Sans' } } 
-                        }
-                    }
-                }
+                data: { labels:['Transfer','Tunai'], datasets:[{ data:[tf, cs], backgroundColor:['#0d6efd','#198754'] }] },
+                options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'bottom' } } }
             });
         }
 
-        /* DYNAMIC ADVANCED PDF GENERATION SYSTEM */
         async function generateCompletePDF() {
-            showToast("Mempersiapkan dokumen PDF Laporan...", "info");
-            
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'mm', 'a4');
+            showToast("Memproses ekspor PDF...", "info");
+            const { jsPDF } = window.jspdf; const doc = new jsPDF('p','mm','a4');
             const sett = state.data.pengaturan;
             
-            // Format timestamps for filename & info
-            const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-            const appYear = sett.tahun || '2026';
-            const safeFileName = `LPJ_HAUL_V3_${appYear}_${timestamp}.pdf`;
+            // Cover Frame
+            doc.setLineWidth(1); doc.setDrawColor(15,81,50); doc.rect(6, 6, 198, 285);
+            doc.setFontSize(24); doc.setFont("Helvetica","bold"); doc.setTextColor(15,81,50);
+            doc.text("LAPORAN PERTANGGUNGJAWABAN BENDAHARA", 105, 60, {align:"center"});
+            
+            doc.setFontSize(28); doc.text((sett.namalpj || "HAUL V3").toUpperCase(), 105, 110, {align:"center"});
+            doc.setFontSize(14); doc.setFont("Helvetica","italic"); doc.setTextColor(100,100,100);
+            doc.text(sett.subjudul || "Laporan Transaksi Aktual", 105, 125, {align:"center"});
 
-            // Setup styling variables
-            const greenPrimary = [15, 81, 50]; // Hex #0f5132
-            const darkAccent = [33, 37, 41];
-            const textMuted = [108, 117, 125];
+            doc.setFillColor(248,249,250); doc.rect(25, 160, 160, 70, 'F');
+            doc.setFont("Helvetica","bold"); doc.setFontSize(11); doc.setTextColor(50,50,50);
+            doc.text(`Tahun Agenda: ${sett.tahun || '-'}`, 35, 175);
+            doc.text(`Tanggal Kegiatan: ${formatDate(sett.tanggalhaul)} (${sett.hijriah || '-'})`, 35, 185);
+            doc.text(`Tempat Pelaksanaan: ${sett.tempat || '-'}`, 35, 195);
+            doc.text(`Status Laporan: ${sett.statuslpj || '-'}`, 35, 205);
 
-            // 1. PAGE ONE: EXCLUSIVE COVER PAGE
-            // Outer Frame Border
-            doc.setLineWidth(1);
-            doc.setDrawColor(16, 185, 129);
-            doc.rect(5, 5, 200, 287);
-            doc.setLineWidth(0.3);
-            doc.rect(7, 7, 196, 283);
+            doc.setFont("Helvetica","normal"); doc.setFontSize(9); doc.text("Sistem Manajemen Laporan Haul V3 Digital Ledger.", 105, 260, {align:"center"});
 
-            // Islamic/Classic Geometric Pattern simulation at corner
-            doc.setFont("Helvetica", "bold");
-            doc.setFontSize(26);
-            doc.setTextColor(15, 81, 50);
-            doc.text("LAPORAN PERTANGGUNGJAWABAN", 105, 50, { align: "center" });
-
-            doc.setFont("Helvetica", "normal");
-            doc.setFontSize(16);
-            doc.setTextColor(33, 37, 41);
-            doc.text("REKAPITULASI REALISASI ANGGARAN & DONASI", 105, 62, { align: "center" });
-
-            // Accent Line
-            doc.setDrawColor(20, 184, 166);
-            doc.line(40, 75, 170, 75);
-
-            // Large Highlight Event Name
-            doc.setFont("Helvetica", "bold");
-            doc.setFontSize(32);
-            doc.setTextColor(15, 81, 50);
-            doc.text((sett.namalpj || "HAUL AGUNG V3").toUpperCase(), 105, 110, { align: "center" });
-
-            doc.setFont("Helvetica", "italic");
-            doc.setFontSize(14);
-            doc.setTextColor(108, 117, 125);
-            doc.text(sett.subjudul || "Laporan Pertanggungjawaban Realisasi Anggaran Haul", 105, 125, { align: "center" });
-
-            // Metada Details Card Frame on Cover
-            doc.setFillColor(248, 249, 250);
-            doc.rect(25, 150, 160, 80, "F");
-            doc.setDrawColor(222, 226, 230);
-            doc.rect(25, 150, 160, 80);
-
-            doc.setFont("Helvetica", "bold");
-            doc.setFontSize(11);
-            doc.setTextColor(33, 37, 41);
-            doc.text("INFORMASI PENYELENGGARAAN", 35, 162);
-            doc.line(35, 165, 175, 165);
-
-            const detailFields = [
-                ["Tahun Pelaksanaan", `: ${sett.tahun || '-'}`],
-                ["Tanggal Miladiyah", `: ${formatDate(sett.tanggalhaul)}`],
-                ["Tanggal Hijriah", `: ${sett.hijriah || '-'}`],
-                ["Hari Pelaksanaan", `: ${sett.hari || '-'}`],
-                ["Lokasi / Tempat", `: ${sett.tempat || '-'}`],
-                ["Status Pelaporan", `: ${sett.statuslpj || 'Rilis Publik'}`],
-                ["Waktu Sinkronisasi", `: ${sett.updateterakhir || '-'}`]
-            ];
-
-            let rowY = 175;
-            doc.setFont("Helvetica", "normal");
-            detailFields.forEach(field => {
-                doc.setFont("Helvetica", "bold");
-                doc.text(field[0], 35, rowY);
-                doc.setFont("Helvetica", "normal");
-                doc.text(field[1], 80, rowY);
-                rowY += 7;
-            });
-
-            // Cover Footer
-            doc.setFont("Helvetica", "bold");
-            doc.setFontSize(10);
-            doc.setTextColor(15, 81, 50);
-            doc.text("KOMUNITAS PANITIA HAUL AGUNG DIGITAL COOPERATIVE", 105, 265, { align: "center" });
-            doc.setFont("Helvetica", "normal");
-            doc.setFontSize(8);
-            doc.setTextColor(108, 117, 125);
-            doc.text("Laporan ini ditarik secara otomatis menggunakan database Google Sheets API terenkripsi", 105, 272, { align: "center" });
-
-            // 2. PAGE TWO: STATISTIK WILAYAH & METRIC CARD
-            doc.addPage();
-            addPDFHeader(doc, "RINGKASAN EKSEKUTIF & STATISTIK WILAYAH", sett);
-
-            // Summary boxes
-            let totalMasuk = 0;
-            state.data.masuk.forEach(row => totalMasuk += parseFloat(row.nominal || 0));
-            let totalKeluar = 0;
-            state.data.keluar.forEach(row => totalKeluar += parseFloat(row.nominal || 0));
-            const totalSaldo = totalMasuk - totalKeluar;
-
-            doc.setFillColor(241, 243, 245);
-            doc.rect(14, 38, 55, 25, "F");
-            doc.rect(77, 38, 55, 25, "F");
-            doc.rect(140, 38, 55, 25, "F");
-
-            doc.setFont("Helvetica", "bold");
-            doc.setFontSize(9);
-            doc.setTextColor(108, 117, 125);
-            doc.text("TOTAL PEMASUKAN", 18, 45);
-            doc.text("TOTAL PENGELUARAN", 81, 45);
-            doc.text("SALDO BERSIH KAS", 144, 45);
-
-            doc.setFontSize(13);
-            doc.setTextColor(21, 115, 71); // Green
-            doc.text(formatIDR(totalMasuk), 18, 55);
-            doc.setTextColor(186, 37, 37); // Red
-            doc.text(formatIDR(totalKeluar), 81, 55);
-            doc.setTextColor(13, 110, 253); // Blue
-            doc.text(formatIDR(totalSaldo), 144, 55);
-
-            doc.setTextColor(33, 37, 41);
-            doc.setFontSize(12);
-            doc.text("Tabel Distribusi Pendanaan Kabupaten / Kecamatan", 14, 75);
-
-            // AutoTable for Stats
-            const statsHeaders = [["Kabupaten", "Total Pemasukan", "Via Transfer", "Tunai / Cash", "Belum Terkumpul", "Persentase"]];
-            const statsRows = state.data.statistik.map(item => [
-                item.kabupaten || '-',
-                formatIDR(item.totalpemasukan),
-                formatIDR(item.viarekening),
-                formatIDR(item.cash),
-                formatIDR(item.belumditerima),
-                `${item.kontribusi || '0'}%`
-            ]);
-
+            // Page 2: Stats
+            doc.addPage(); addPDFHeader(doc, "STATISTIK KONTRIBUSI DAERAH", sett);
             doc.autoTable({
-                head: statsHeaders,
-                body: statsRows,
-                startY: 80,
-                theme: 'striped',
-                headStyles: { fillColor: [15, 81, 50], textColor: [255, 255, 255] },
-                alternateRowStyles: { fillColor: [248, 249, 250] },
-                margin: { left: 14, right: 14 },
-                didDrawPage: (data) => addPDFPageNumber(doc, data)
+                head: [["Kabupaten", "Total Pemasukan", "Transfer", "Cash/Tunai", "Tunggakan", "Persentase"]],
+                body: state.data.statistik.map(i=>[i.kabupaten, formatIDR(i.totalpemasukan), formatIDR(i.viarekening), formatIDR(i.cash), formatIDR(i.belumditerima), `${i.kontribusi}%`]),
+                startY: 38, theme:'striped', headStyles:{fillColor:[15,81,50]},
+                didDrawPage: (d) => addPDFPageNumber(doc)
             });
 
-            // 3. PAGE THREE: KAS MASUK TABLE
-            doc.addPage();
-            addPDFHeader(doc, "DAFTAR PENERIMAAN KAS (KAS MASUK)", sett);
-
-            const incomeHeaders = [["Tanggal", "Nama Donatur", "Domisili", "Nominal", "Metode", "Via", "Keterangan"]];
-            const incomeRows = state.data.masuk.map(item => [
-                formatDate(item.tanggal),
-                item.namadonatur || '-',
-                `${item.kabupaten} (${item.domisili})`,
-                formatIDR(item.nominal),
-                item.metode || '-',
-                item.via || '-',
-                item.keterangan || '-'
-            ]);
-
+            // Page 3: Inflow
+            doc.addPage(); addPDFHeader(doc, "RINCIAN DATA KAS MASUK", sett);
             doc.autoTable({
-                head: incomeHeaders,
-                body: incomeRows,
-                startY: 38,
-                theme: 'grid',
-                headStyles: { fillColor: [16, 185, 129], textColor: [255, 255, 255], fontStyle: 'bold' },
-                alternateRowStyles: { fillColor: [248, 249, 250] },
-                columnStyles: {
-                    0: { cellWidth: 24 },
-                    1: { cellWidth: 40 },
-                    2: { cellWidth: 35 },
-                    3: { cellWidth: 26, fontStyle: 'bold' },
-                    4: { cellWidth: 18 },
-                    5: { cellWidth: 18 },
-                    6: { cellWidth: 21 }
-                },
-                margin: { left: 14, right: 14 },
-                didDrawPage: (data) => addPDFPageNumber(doc, data)
+                head: [["Tanggal", "Donatur", "Wilayah", "Nominal", "Metode", "Via", "Keterangan"]],
+                body: state.data.masuk.map(i=>[formatDate(i.tanggal), i.namadonatur, i.kabupaten, formatIDR(i.nominal), i.metode, i.via, i.keterangan]),
+                startY: 38, theme:'grid', headStyles:{fillColor:[25,135,84]},
+                didDrawPage: (d) => addPDFPageNumber(doc)
             });
 
-            // 4. PAGE FOUR: KAS KELUAR TABLE
-            doc.addPage();
-            addPDFHeader(doc, "DAFTAR PENGELUARAN KAS (KAS KELUAR)", sett);
-
-            const expenseHeaders = [["Tanggal", "Keperluan", "Kategori", "Penerima", "Nominal", "Penanggungjawab", "Keterangan"]];
-            const expenseRows = state.data.keluar.map(item => [
-                formatDate(item.tanggal),
-                item.keperluan || '-',
-                item.kategori || '-',
-                item.penerima || '-',
-                formatIDR(item.nominal),
-                item.dibayaroleh || '-',
-                item.keterangan || '-'
-            ]);
-
+            // Page 4: Outflow
+            doc.addPage(); addPDFHeader(doc, "RINCIAN DATA KAS KELUAR", sett);
             doc.autoTable({
-                head: expenseHeaders,
-                body: expenseRows,
-                startY: 38,
-                theme: 'grid',
-                headStyles: { fillColor: [239, 68, 68], textColor: [255, 255, 255], fontStyle: 'bold' },
-                alternateRowStyles: { fillColor: [248, 249, 250] },
-                columnStyles: {
-                    0: { cellWidth: 24 },
-                    1: { cellWidth: 42 },
-                    2: { cellWidth: 24 },
-                    3: { cellWidth: 28 },
-                    4: { cellWidth: 26, fontStyle: 'bold' },
-                    5: { cellWidth: 22 },
-                    6: { cellWidth: 16 }
-                },
-                margin: { left: 14, right: 14 },
-                didDrawPage: (data) => addPDFPageNumber(doc, data)
+                head: [["Tanggal", "Keperluan", "Kategori", "Penerima", "Nominal", "Penanggungjawab", "Keterangan"]],
+                body: state.data.keluar.map(i=>[formatDate(i.tanggal), i.keperluan, i.kategori, i.penerima, formatIDR(i.nominal), i.dibayaroleh, i.keterangan]),
+                startY: 38, theme:'grid', headStyles:{fillColor:[220,53,69]},
+                didDrawPage: (d) => addPDFPageNumber(doc)
             });
 
-            // Save completed PDF
-            doc.save(safeFileName);
-            showToast(`PDF Laporan berhasil diunduh: ${safeFileName}`, "success");
+            doc.save(`LPJ_HAUL_V3_${sett.tahun || '2026'}.pdf`);
+            showToast("Seluruh bundel berkas PDF berhasil diterbitkan.", "success");
         }
 
-        /* HELPER FOR EXPORTING CURRENT TAB ONLY */
         function exportTableToPDF(type) {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'mm', 'a4');
+            const { jsPDF } = window.jspdf; const doc = new jsPDF('p','mm','a4');
             const sett = state.data.pengaturan;
-            
-            let titleText = "";
-            let headers = [];
-            let rows = [];
-            let headColor = [15, 81, 50];
+            let t = ""; let h = []; let r = []; let c = [15,81,50];
 
-            if (type === 'stats') {
-                titleText = "LAPORAN KONTRIBUSI WILAYAH";
-                headers = [["Kabupaten", "Total Pemasukan", "Via Transfer", "Tunai / Cash", "Belum Terkumpul", "Persentase"]];
-                rows = state.data.statistik.map(item => [
-                    item.kabupaten || '-',
-                    formatIDR(item.totalpemasukan),
-                    formatIDR(item.viarekening),
-                    formatIDR(item.cash),
-                    formatIDR(item.belumditerima),
-                    `${item.kontribusi || '0'}%`
-                ]);
-                headColor = [15, 81, 50];
-            } else if (type === 'income') {
-                titleText = "DAFTAR PENERIMAAN DONASI (KAS MASUK)";
-                headers = [["Tanggal", "Donatur", "Wilayah / Domisili", "Nominal", "Metode", "Via", "Keterangan"]];
-                rows = state.filteredData.masuk.map(item => [
-                    formatDate(item.tanggal),
-                    item.namadonatur || '-',
-                    `${item.kabupaten} (${item.domisili})`,
-                    formatIDR(item.nominal),
-                    item.metode || '-',
-                    item.via || '-',
-                    item.keterangan || '-'
-                ]);
-                headColor = [16, 185, 129];
-            } else if (type === 'expense') {
-                titleText = "DAFTAR PENGELUARAN PANITIA (KAS KELUAR)";
-                headers = [["Tanggal", "Keperluan", "Kategori", "Penerima", "Nominal", "Penanggungjawab", "Keterangan"]];
-                rows = state.filteredData.keluar.map(item => [
-                    formatDate(item.tanggal),
-                    item.keperluan || '-',
-                    item.kategori || '-',
-                    item.penerima || '-',
-                    formatIDR(item.nominal),
-                    item.dibayaroleh || '-',
-                    item.keterangan || '-'
-                ]);
-                headColor = [239, 68, 68];
+            if(type==='stats') {
+                t = "DAFTAR REKAPITULASI WILAYAH"; h = [["Kabupaten", "Total Pemasukan", "Transfer", "Cash", "Belum Terkumpul", "Kontribusi"]];
+                r = state.data.statistik.map(i=>[i.kabupaten, formatIDR(i.totalpemasukan), formatIDR(i.viarekening), formatIDR(i.cash), formatIDR(i.belumditerima), `${i.kontribusi}%`]);
+            } else if(type==='income') {
+                t = "JURNAL MUTASI KAS MASUK"; h = [["Tanggal", "Donatur", "Wilayah", "Nominal", "Metode", "Via", "Keterangan"]];
+                r = state.filteredData.masuk.map(i=>[formatDate(i.tanggal), i.namadonatur, i.kabupaten, formatIDR(i.nominal), i.metode, i.via, i.keterangan]); c = [25,135,84];
+            } else if(type==='expense') {
+                t = "JURNAL MUTASI KAS KELUAR"; h = [["Tanggal", "Keperluan", "Kategori", "Penerima", "Nominal", "Pihak", "Keterangan"]];
+                r = state.filteredData.keluar.map(i=>[formatDate(i.tanggal), i.keperluan, i.kategori, i.penerima, formatIDR(i.nominal), i.dibayaroleh, i.keterangan]); c = [220,53,69];
             }
 
-            addPDFHeader(doc, titleText, sett);
-
-            doc.autoTable({
-                head: headers,
-                body: rows,
-                startY: 38,
-                theme: 'striped',
-                headStyles: { fillColor: headColor, textColor: [255, 255, 255] },
-                margin: { left: 14, right: 14 },
-                didDrawPage: (data) => addPDFPageNumber(doc, data)
-            });
-
-            const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-            const filename = `LPJ_EKSPOR_${type.toUpperCase()}_${timestamp}.pdf`;
-            doc.save(filename);
-            showToast(`PDF berhasil diekspor: ${filename}`, "success");
+            addPDFHeader(doc, t, sett);
+            doc.autoTable({ head:h, body:r, startY:38, theme:'striped', headStyles:{fillColor:c}, didDrawPage:()=>addPDFPageNumber(doc) });
+            doc.save(`EKSPOR_${type.toUpperCase()}.pdf`);
         }
 
-        /* HEADER & FOOTER TEMPLATE INJECTIONS FOR DYNAMIC PDF */
-        function addPDFHeader(doc, title, settings) {
-            // Main Top Border
-            doc.setFillColor(15, 81, 50);
-            doc.rect(14, 10, 182, 3, "F");
-
-            // Meta Info Header Left
-            doc.setFont("Helvetica", "bold");
-            doc.setFontSize(14);
-            doc.setTextColor(33, 37, 41);
-            doc.text((settings.namalpj || "LPJ HAUL V3").toUpperCase(), 14, 22);
-
-            doc.setFont("Helvetica", "italic");
-            doc.setFontSize(8);
-            doc.setTextColor(108, 117, 125);
-            doc.text(settings.subjudul || "Laporan Pertanggungjawaban Realisasi Anggaran Haul", 14, 26);
-
-            // Document Title Header Right
-            doc.setFont("Helvetica", "bold");
-            doc.setFontSize(10);
-            doc.setTextColor(15, 81, 50);
-            doc.text(title, 196, 22, { align: "right" });
-
-            doc.setFont("Helvetica", "normal");
-            doc.setFontSize(8);
-            doc.setTextColor(108, 117, 125);
-            doc.text(`Tahun Pelaksanaan: ${settings.tahun || '2026'}  |  Status: ${settings.statuslpj || 'Rilis'}`, 196, 26, { align: "right" });
-
-            // Divider Line
-            doc.setDrawColor(222, 226, 230);
-            doc.line(14, 30, 196, 30);
+        function addPDFHeader(doc, title, sett) {
+            doc.setFillColor(15,81,50); doc.rect(14, 10, 182, 2, 'F');
+            doc.setFont("Helvetica","bold"); doc.setFontSize(12); doc.setTextColor(40,40,40);
+            doc.text(sett.namalpj || "LPJ HAUL V3", 14, 20);
+            doc.setFontSize(9); doc.setTextColor(15,81,50); doc.text(title, 196, 20, {align:"right"});
+            doc.line(14, 26, 196, 26);
         }
 
-        function addPDFPageNumber(doc, data) {
-            const pageCount = doc.internal.getNumberOfPages();
-            
-            // Footer Boundary Line
-            doc.setDrawColor(222, 226, 230);
-            doc.line(14, 282, 196, 282);
-
-            doc.setFont("Helvetica", "normal");
-            doc.setFontSize(8);
-            doc.setTextColor(108, 117, 125);
-            doc.text("Laporan Pertanggungjawaban (LPJ) Haul Akbar V3 Digital Ledger System", 14, 288);
-            
-            doc.setFont("Helvetica", "bold");
-            doc.text(`Halaman ${pageCount}`, 196, 288, { align: "right" });
+        function addPDFPageNumber(doc) {
+            const p = doc.internal.getNumberOfPages();
+            doc.line(14, 280, 196, 280);
+            doc.setFontSize(8); doc.setTextColor(120,120,120); doc.text(`Dokumen LPJ HAUL V3 - Halaman ${p}`, 14, 286);
         }
 
-        /* GENERAL UTILITY FORMATTING FUNCTIONS */
-        function formatIDR(value) {
-            const numericValue = parseFloat(value);
-            if (isNaN(numericValue)) return "Rp 0";
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(numericValue);
+        function formatIDR(v) {
+            let n = parseFloat(v); if(isNaN(n)) return "Rp 0";
+            return new Intl.NumberFormat('id-ID', { style:'currency', currency:'IDR', minimumFractionDigits:0 }).format(n);
         }
 
-        function formatDate(dateStr) {
-            if (!dateStr) return "-";
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            try {
-                const date = new Date(dateStr);
-                if (isNaN(date.getTime())) return dateStr; // fallback to raw string if format differs
-                return date.toLocaleDateString('id-ID', options);
-            } catch (e) {
-                return dateStr;
-            }
+        function formatDate(d) {
+            if(!d) return "-"; let date = new Date(d); if(isNaN(date.getTime())) return d;
+            return date.toLocaleDateString('id-ID', { year:'numeric', month:'long', day:'numeric' });
         }
 
-        function formatDateShort(dateStr) {
-            if (!dateStr) return "-";
-            try {
-                const date = new Date(dateStr);
-                if (isNaN(date.getTime())) return dateStr;
-                return date.toLocaleDateString('id-ID', { month: 'short', day: 'numeric' });
-            } catch (e) {
-                return dateStr;
-            }
+        function formatDateShort(d) {
+            if(!d) return "-"; let date = new Date(d); if(isNaN(date.getTime())) return d;
+            return date.toLocaleDateString('id-ID', { month:'short', day:'numeric' });
         }
 
-        /* CUSTOM NON-BLOCKING TOASTS NOTIFICATIONS */
-        function showToast(message, type = "success") {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            
-            let strokeColor = "#10b981"; // success
-            let iconName = "check-circle";
-
-            if (type === "warning") {
-                strokeColor = "#f59e0b";
-                iconName = "alert-triangle";
-            } else if (type === "info") {
-                strokeColor = "#2563eb";
-                iconName = "info";
-            }
-
-            toast.style.borderLeftColor = strokeColor;
-            toast.innerHTML = `
-                <i data-lucide="${iconName}" style="color: ${strokeColor}; width: 18px; height: 18px;"></i>
-                <span>${message}</span>
-            `;
-
-            container.appendChild(toast);
-            lucide.createIcons(); // Initialize the dynamic icon
-
-            // Auto dismiss toast
-            setTimeout(() => {
-                toast.style.animation = "slideInLeft 0.3s ease-out reverse forwards";
-                setTimeout(() => {
-                    toast.remove();
-                }, 300);
-            }, 3000);
+        function showToast(m, type="success") {
+            const c = document.getElementById('toast-container'); const t = document.createElement('div');
+            t.className = 'toast'; t.style.borderLeftColor = type==='success'?'#198754':type==='warning'?'#ffc107':'#0d6efd';
+            t.innerHTML = `<i data-lucide="info" style="width:16px;height:16px;"></i><span>${m}</span>`;
+            c.appendChild(t); lucide.createIcons();
+            setTimeout(() => { t.style.opacity = "0"; setTimeout(() => t.remove(), 200); }, 3000);
         }
     </script>
 </body>
 </html>
-
-```
