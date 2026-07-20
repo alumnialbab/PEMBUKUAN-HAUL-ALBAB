@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPJ HAUL ALUMNI AL ALBAB</title>
+    <meta name="description" content="Laporan Pertanggungjawaban Haul Alumni AL ALBAB berbasis Google Sheets">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Embedded CSS Premium, Responsif -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0b6b3a 0%, #15803d 100%);
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+            box-shadow: 0 4px 20px rgba(11, 107, 58, 0.15);
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .header p#subJudul {
+            font-size: 15px;
+            opacity: 0.9;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .header-info {
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 16px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .header-info span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        p#tempat {
+            font-size: 13px;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        /* Navigasi */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #f1f5f9;
+            color: #475569;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .nav-btn.active {
+            background: #0b6b3a;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(11, 107, 58, 0.2);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+            padding: 24px 16px;
+            width: 100%;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Toolbar Aksi */
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        /* Card Dashboard */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+            border: 1px solid #f1f5f9;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card h3 {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .card h2 {
+            margin-top: 8px;
+            color: #0b6b3a;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .saldo {
+            border-left: 5px solid #0b6b3a;
+            background: linear-gradient(to right, #f0fdf4, #ffffff);
+        }
+
+        /* Custom UI GRID Statistik per Kabupaten - Meniru Gambar Referensi */
+        .statistik-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+            border: 1px solid #f1f5f9;
+            margin-bottom: 24px;
+        }
+
+        .statistik-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .grid-kabupaten {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1px; /* Jarak sangat tipis seperti border sel excel */
+            background-color: #64748b; /* Warna pembatas */
+            border: 1px solid #64748b;
+        }
+
+        .kab-card {
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .kab-name {
+            background: #d9ebd3; /* Hijau pucat seperti referensi gambar */
+            padding: 6px 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #1e293b;
+            border-bottom: 1px solid #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kab-val {
+            position: relative;
+            padding: 8px 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #0f172a;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 38px;
+            z-index: 1;
+        }
+
+        /* Data Bar (Background pengisi nilai) */
+        .data-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.6; /* Transparan agar text mudah dibaca */
+        }
+
+        /* Color Codes untuk Kotak Grid (Background Solid) */
+        .bg-red { background-color: #fca5a5; }     /* Merah Pucat (0) */
+        .bg-orange { background-color: #fdba74; }  /* Oranye (< 1jt) */
+        .bg-yellow { background-color: #fef08a; }  /* Kuning (1jt - 5jt) */
+        .bg-green { background-color: #a7f3d0; }   /* Hijau (> 5jt) */
+        .bg-purple { background-color: #e2e8f0; }  /* Default/Kosong */
+
+        /* Panduan Pengaturan Jika Kosong */
+        .guideline-box {
+            display: none;
+            background: #fffbeb;
+            border-left: 5px solid #d97706;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 24px;
+            color: #92400e;
+        }
+
+        .guideline-box h4 {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .guideline-box ol {
+            padding-left: 18px;
+            font-size: 13px;
+        }
+
+        /* Informasi Dashboard Ekstra */
+        .dashboard-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: #fff;
+            padding: 16px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,.04);
+            border: 1px solid #f1f5f9;
+        }
+
+        .info-card span {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .info-card strong {
+            font-size: 14px;
+            color: #1e293b;
+        }
+
+        /* Tombol Modern */
+        .btn-primary, .btn-success, .btn-secondary {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary { background: #0b6b3a; color: white; }
+        .btn-primary:hover { background: #08522c; }
+        .btn-success { background: #16a34a; color: white; }
+        .btn-success:hover { background: #15803d; }
+        .btn-secondary { background: #e2e8f0; color: #475569; }
+
+        /* Page Headers & Search input */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .page-title {
+            font-size: 20px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .search-box {
+            padding: 10px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 320px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        /* Tabel Khusus - FIT LAYAR SATU BARIS */
+        .table-container {
+            width: 100%;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+            border: 1px solid #e2e8f0;
+            overflow: hidden; /* Hapus overflow-x agar tabel tidak bisa digeser */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* KUNCI: Memaksa tabel patuh pada persentase lebar dan tidak melebar keluar batas */
+        }
+
+        th, td {
+            padding: 10px 6px;
+            border-bottom: 1px solid #edf2f7;
+            /* Auto-scaling font: minimal 9px, optimal berdasarkan ukuran layar, maksimal 13px */
+            font-size: clamp(9px, 1.8vw, 13px); 
+            vertical-align: middle;
+            white-space: nowrap; /* Teks tidak boleh turun baris */
+            overflow: hidden; /* Teks dipotong jika melebihi lebar sel */
+            text-overflow: ellipsis; /* Muncul titik-titik (...) jika teks dipotong */
+        }
+
+        th {
+            background: #0b6b3a;
+            color: #fff;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        tr:nth-child(even) { background-color: #f8fafc; }
+        tr:hover { background-color: #f1f5f9; }
+
+        /* Keterangan tambahan diubah jadi inline span */
+        .text-muted {
+            color: #64748b;
+            font-weight: normal;
+        }
+
+        .nominal-val { font-weight: 600; }
+        .nominal-masuk { color: #1e293b; }
+        .nominal-keluar { color: #dc2626; }
+        
+        /* Penyesuaian Kolom agar tidak tertutup rata-rata perbandingan */
+        th:nth-child(1), td:nth-child(1) { width: 14%; }
+        th:nth-child(2), td:nth-child(2) { width: 33%; }
+        th:nth-child(3), td:nth-child(3) { width: 26%; }
+        th:nth-child(4), td:nth-child(4) { width: 27%; text-align: right; }
+
+        /* Modal Generator PDF */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show { display: flex; opacity: 1; }
+
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 440px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .modal-content h2 { color: #0b6b3a; margin-bottom: 12px; font-size: 20px; font-weight: 700; }
+        .modal-content p { margin-bottom: 20px; color: #64748b; font-size: 13px; }
+        .modal-buttons { display: flex; justify-content: center; gap: 10px; }
+
+        /* Spinner Loading */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 2000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading.show { display: flex; }
+
+        .spinner {
+            width: 40px; height: 40px;
+            border: 4px solid #f1f5f9;
+            border-top: 4px solid #0b6b3a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 12px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast Notifikasi */
+        .toast {
+            position: fixed;
+            bottom: 24px; right: 24px;
+            background: #1e293b; color: #fff;
+            padding: 12px 20px; border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 3000;
+            transform: translateY(100px);
+            opacity: 0; transition: all 0.3s ease;
+            font-size: 13px; font-weight: 500;
+        }
+
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* Footer */
+        .footer {
+            margin-top: 48px; padding-top: 32px;
+            border-top: 1px solid #e2e8f0; color: #64748b;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px; margin-bottom: 30px;
+        }
+
+        .footer-item h3 {
+            color: #1e293b; font-size: 14px; font-weight: 600;
+            margin-bottom: 12px; text-transform: uppercase;
+        }
+
+        .footer-item p { font-size: 13px; margin-bottom: 8px; }
+        hr { border: 0; border-top: 1px solid #e2e8f0; margin-bottom: 20px; }
+        .footer-bottom {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 12px; font-size: 12px;
+        }
+
+        /* Media Query Khusus Handphone */
+        @media(max-width:768px) {
+            .navbar { gap: 6px; padding: 8px; }
+            .nav-btn {
+                padding: 8px 12px; font-size: 12px;
+                flex: 1 1 calc(50% - 6px); justify-content: center;
+            }
+            .header h1 { font-size: 20px; }
+            .header p#subJudul { font-size: 13px; }
+            .page-header { flex-direction: column; align-items: stretch; }
+            .search-box { max-width: 100%; }
+            th, td { padding: 8px 4px; }
+            
+            /* Penyesuaian Grid Visual di Layar Mobile (3 Kolom) */
+            .grid-kabupaten {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+        <div class="container">
+            <h1 id="namaLPJ">LPJ HAUL ALUMNI AL ALBAB</h1>
+            <p id="subJudul">Laporan Pertanggungjawaban Dana</p>
+            <div class="header-info">
+                <span id="tahun"><i class="fa-solid fa-calendar"></i> Tahun 2026</span>
+                <span id="hari"><i class="fa-solid fa-clock"></i> Minggu</span>
+                <span id="tanggal"><i class="fa-solid fa-calendar-day"></i> 16 Agustus 2026</span>
+                <span id="hijriah"><i class="fa-solid fa-moon"></i> 2 Safar 1448 H</span>
+            </div>
+            <p id="tempat"><i class="fa-solid fa-location-dot"></i> Banda Aceh</p>
+        </div>
+    </header>
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar">
+        <button class="nav-btn" data-page="dashboard">
+            <i class="fa-solid fa-house"></i> Dashboard
+        </button>
+        <button class="nav-btn" data-page="kasMasuk">
+            <i class="fa-solid fa-arrow-down"></i> Kas Masuk
+        </button>
+        <button class="nav-btn" data-page="kasKeluar">
+            <i class="fa-solid fa-arrow-up"></i> Kas Keluar
+        </button>
+    </nav>
+
+    <main>
+        <!-- ================= PANDUAN INTEGRASI ================= -->
+        <div id="guidelineBox" class="guideline-box">
+            <h4><i class="fa-solid fa-circle-exclamation"></i> Data Tidak Terbaca?</h4>
+            <ol>
+                <li>Buka berkas Spreadsheet Anda di Google Drive.</li>
+                <li>Pilih <strong>File</strong> &gt; <strong>Bagikan</strong> &gt; <strong>Publikasikan ke Web</strong>.</li>
+                <li>Ubah format dari "Situs Web" menjadi <strong>Nilai yang dipisahkan koma (.csv)</strong> di setiap lembar kerja (Tab).</li>
+                <li>Klik tombol <strong>Refresh Data</strong> untuk memperbarui halaman.</li>
+            </ol>
+        </div>
+
+        <!-- ================= DASHBOARD ================= -->
+        <section id="dashboard" class="page">
+            <div class="toolbar">
+                <button id="btnRefresh" class="btn-primary">
+                    <i class="fa-solid fa-rotate"></i> Refresh Data
+                </button>
+                <button id="btnPDF" class="btn-success">
+                    <i class="fa-solid fa-file-pdf"></i> Download LPJ PDF
+                </button>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Total Pemasukan</h3>
+                    <h2 id="totalPemasukan">Rp 0</h2>
+                </div>
+                <div class="card">
+                    <h3>Total Pengeluaran</h3>
+                    <h2 id="totalPengeluaran">Rp 0</h2>
+                </div>
+                <div class="card saldo">
+                    <h3>Saldo Akhir</h3>
+                    <h2 id="saldoAkhir">Rp 0</h2>
+                </div>
+            </div>
+
+            <div class="dashboard-info">
+                <div class="info-card">
+                    <span>Status LPJ</span>
+                    <strong id="statusLPJ">-</strong>
+                </div>
+                <div class="info-card">
+                    <span>Update Terakhir</span>
+                    <strong id="updateTerakhir">-</strong>
+                </div>
+            </div>
+
+            <!-- Grid Visual Statistik Per Kabupaten (Desain Excel Data Bar) -->
+            <div class="statistik-container">
+                <div class="statistik-title">Statistik Pemasukan Per Kabupaten</div>
+                <div class="grid-kabupaten" id="gridStatistik">
+                    <!-- DOM Terisi otomatis dari Javascript (Data Langsung dari Kolom Sheet) -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= KAS MASUK ================= -->
+        <section id="kasMasuk" class="page">
+            <div class="page-header">
+                <h2 class="page-title">Data Kas Masuk</h2>
+                <input type="text" id="searchKasMasuk" class="search-box" placeholder="Cari donatur, domisili, atau via...">
+            </div>
+            <div class="table-container">
+                <table id="tableKasMasuk">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Nama & Ket</th>
+                            <th>Domisili (Kab)</th>
+                            <th>Nominal (Metode)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kasMasukBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ================= KAS KELUAR ================= -->
+        <section id="kasKeluar" class="page">
+            <div class="page-header">
+                <h2 class="page-title">Data Kas Keluar</h2>
+                <input type="text" id="searchKasKeluar" class="search-box" placeholder="Cari keperluan, kategori, atau penerima...">
+            </div>
+            <div class="table-container">
+                <table id="tableKasKeluar">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Keperluan</th>
+                            <th>Penerima (Oleh)</th>
+                            <th>Nominal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kasKeluarBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ================= LOADING SPINNER ================= -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Menghubungkan & Sinkronisasi Google Sheets...</p>
+        </div>
+
+        <!-- ================= NOTIFIKASI TOAST ================= -->
+        <div id="toast" class="toast">
+            <span id="toastText">Berhasil memperbarui data</span>
+        </div>
+
+        <!-- ================= DIALOG MODAL PDF ================= -->
+        <div id="pdfModal" class="modal">
+            <div class="modal-content">
+                <h2><i class="fa-solid fa-file-pdf"></i> Ekspor Dokumen LPJ</h2>
+                <p>Ekspor laporan akan merangkum Ringkasan, Grid Statistik Warna, serta tabel data rinci dalam mode Landscape agar semua kolom tampil utuh.</p>
+                <div class="modal-buttons">
+                    <button id="downloadPDF" class="btn-success">
+                        <i class="fa-solid fa-download"></i> Unduh PDF
+                    </button>
+                    <button id="closeModal" class="btn-secondary">Batal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= FOOTER ================= -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-item">
+                    <h3>Informasi Rekening</h3>
+                    <p><strong>Bank :</strong> <span id="bank">-</span></p>
+                    <p><strong>No. Rekening :</strong> <span id="rekening">-</span></p>
+                    <p><strong>Atas Nama :</strong> <span id="atasNama">-</span></p>
+                </div>
+                <div class="footer-item">
+                    <h3>Pembaruan Data</h3>
+                    <p>Update Terakhir :</p>
+                    <strong id="footerUpdate">-</strong>
+                </div>
+            </div>
+            <hr>
+            <div class="footer-bottom">
+                <p>© <span id="copyrightYear">2026</span> LPJ HAUL ALUMNI AL ALBAB</p>
+                <p>Sistem Terintegrasi Google Sheets & Cloud</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ================= EXTERNAL SCRIPTS ================= -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- ================= JAVASCRIPT SYSTEM ENGINE ================= -->
+    <script>
+        /* =====================================================
+           Tautan CSV Google Sheets Resmi
+        =====================================================*/
+        const CSV = {
+            pengaturan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSPMBOYCmeuRcXWfZdjtGZUGSSOrh6xQH3xpxzTsfiRPz4qjoje_jJpJC0oNch5-_wIeSeMbVmF3Dng/pub?gid=30205368&single=true&output=csv",
+            statistik: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSPMBOYCmeuRcXWfZdjtGZUGSSOrh6xQH3xpxzTsfiRPz4qjoje_jJpJC0oNch5-_wIeSeMbVmF3Dng/pub?gid=554794101&single=true&output=csv",
+            kasMasuk: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSPMBOYCmeuRcXWfZdjtGZUGSSOrh6xQH3xpxzTsfiRPz4qjoje_jJpJC0oNch5-_wIeSeMbVmF3Dng/pub?gid=0&single=true&output=csv",
+            kasKeluar: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSPMBOYCmeuRcXWfZdjtGZUGSSOrh6xQH3xpxzTsfiRPz4qjoje_jJpJC0oNch5-_wIeSeMbVmF3Dng/pub?gid=1232308945&single=true&output=csv"
+        };
+
+        /* =====================================================
+           State Global Data
+        =====================================================*/
+        let pengaturan = [];
+        let statistik = [];
+        let kasMasuk = [];
+        let kasKeluar = [];
+        
+        let listKabupaten = [];
+        let rekapKabupaten = {};
+
+        const loading = document.getElementById("loading");
+        const toast = document.getElementById("toast");
+        const toastText = document.getElementById("toastText");
+        const guidelineBox = document.getElementById("guidelineBox");
+
+        function showLoading() { loading.classList.add("show"); }
+        function hideLoading() { loading.classList.remove("show"); }
+        
+        function showToast(text = "Berhasil") {
+            toastText.innerText = text;
+            toast.classList.add("show");
+            setTimeout(() => { toast.classList.remove("show"); }, 2500);
+        }
+
+        function getProp(row, key) {
+            if (!row) return "";
+            const cleanKey = key.trim().toLowerCase();
+            for (const k in row) {
+                const cleanRowKey = k.replace(/^\uFEFF/, "").trim().toLowerCase();
+                if (cleanRowKey === cleanKey) {
+                    return row[k];
+                }
+            }
+            return "";
+        }
+
+        /* =====================================================
+           Formatters & Parser
+        =====================================================*/
+        function rupiah(val) {
+            val = Number(val) || 0;
+            let formatted = new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0
+            }).format(val);
+            return formatted.replace(/Rp\s+/i, 'Rp');
+        }
+
+        function formatTanggalSingkat(tanggal) {
+            if (!tanggal) return "-";
+            const t = new Date(tanggal);
+            if (isNaN(t)) return tanggal;
+            const dd = String(t.getDate()).padStart(2, '0');
+            const mm = String(t.getMonth() + 1).padStart(2, '0');
+            const yy = String(t.getFullYear()).slice(-2);
+            return `${dd}-${mm}-${yy}`;
+        }
+
+        function parseTanggal(str) {
+            if (!str) return 0;
+            const parts = str.split(/[\/\-]/);
+            if (parts.length === 3) {
+                if (parts[0].length <= 2 && parts[2].length >= 2) {
+                    let yr = parts[2].length === 2 ? `20${parts[2]}` : parts[2];
+                    return new Date(`${yr}-${parts[1]}-${parts[0]}`).getTime();
+                }
+            }
+            return new Date(str).getTime() || 0;
+        }
+
+        function angka(nilai) {
+            if (nilai === undefined || nilai === null || nilai === '') return 0;
+            let str = String(nilai).trim().replace(/Rp/gi, '').trim();
+            const dots = (str.match(/\./g) || []).length;
+            const commas = (str.match(/,/g) || []).length;
+
+            if (dots > 1) {
+                str = str.replace(/\./g, '');
+                if (commas === 1) str = str.replace(/,/g, '.');
+            } else if (commas > 1) {
+                str = str.replace(/,/g, '');
+            } else if (dots === 1 && commas === 1) {
+                if (str.indexOf('.') < str.indexOf(',')) {
+                    str = str.replace(/\./g, '').replace(/,/g, '.');
+                } else {
+                    str = str.replace(/,/g, '');
+                }
+            } else if (dots === 1) {
+                if (str.split('.')[1].length === 3) str = str.replace(/\./g, '');
+            } else if (commas === 1) {
+                if (str.split(',')[1].length === 3) str = str.replace(/,/g, '');
+                else str = str.replace(/,/g, '.');
+            }
+            str = str.replace(/[^\d.-]/g, "");
+            return parseFloat(str) || 0;
+        }
+
+        /* =====================================================
+           Sistem Pemrosesan & Ambil CSV
+        =====================================================*/
+        async function getCSV(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                let txt = await response.text();
+                if (txt.charCodeAt(0) === 0xFEFF) txt = txt.substring(1);
+                
+                return new Promise((resolve) => {
+                    Papa.parse(txt, {
+                        header: true,
+                        skipEmptyLines: true,
+                        complete: (res) => resolve(res.data)
+                    });
+                });
+            } catch (err) {
+                return new Promise((resolve, reject) => {
+                    Papa.parse(url, {
+                        download: true,
+                        header: true,
+                        skipEmptyLines: true,
+                        complete: (res) => resolve(res.data),
+                        error: (e) => reject(e)
+                    });
+                });
+            }
+        }
+
+        async function loadSemuaData() {
+            try {
+                const hasil = await Promise.all([
+                    getCSV(CSV.pengaturan),
+                    getCSV(CSV.statistik),
+                    getCSV(CSV.kasMasuk),
+                    getCSV(CSV.kasKeluar)
+                ]);
+
+                pengaturan = hasil[0];
+                statistik = hasil[1];
+                kasMasuk = hasil[2];
+                kasKeluar = hasil[3];
+
+                guidelineBox.style.display = (!pengaturan.length && !kasMasuk.length) ? "block" : "none";
+            } catch (err) {
+                console.error("Gagal sinkronisasi data:", err);
+                guidelineBox.style.display = "block";
+                showToast("Gagal memuat data Google Sheets.");
+            }
+        }
+
+        async function refreshData() {
+            showLoading();
+            await loadSemuaData();
+            renderPengaturan();
+            renderDashboard();
+            renderStatistikGrid();
+            initKasMasuk();
+            initKasKeluar();
+            hideLoading();
+            showToast("Sinkronisasi Sukses!");
+        }
+
+        /* =====================================================
+           Render Identitas & Pengaturan
+        =====================================================*/
+        function getSetting(nama) {
+            if (!pengaturan.length) return "";
+            const row = pengaturan.find(item => {
+                const keys = Object.keys(item);
+                if (!keys.length) return false;
+                const firstVal = item[keys[0]];
+                return firstVal && firstVal.toString().trim().toLowerCase() === nama.trim().toLowerCase();
+            });
+            if (!row) return "";
+            const keys = Object.keys(row);
+            return keys.length > 1 ? row[keys[1]] : "";
+        }
+
+        function renderPengaturan() {
+            const namaLpj = getSetting("Nama LPJ") || "LPJ HAUL ALUMNI AL ALBAB";
+            document.title = namaLpj;
+            document.getElementById("namaLPJ").textContent = namaLpj;
+            document.getElementById("subJudul").textContent = getSetting("Sub Judul") || "-";
+            document.getElementById("tahun").innerHTML = `<i class="fa-solid fa-calendar"></i> Tahun ${getSetting("Tahun") || "-"}`;
+            document.getElementById("hari").innerHTML = `<i class="fa-solid fa-clock"></i> ${getSetting("Hari") || "-"}`;
+            document.getElementById("tanggal").innerHTML = `<i class="fa-solid fa-calendar-day"></i> ${getSetting("Tanggal Haul") || "-"}`;
+            document.getElementById("hijriah").innerHTML = `<i class="fa-solid fa-moon"></i> ${getSetting("Hijriah") || "-"}`;
+            document.getElementById("tempat").innerHTML = `<i class="fa-solid fa-location-dot"></i> ${getSetting("Tempat") || "-"}`;
+
+            document.getElementById("bank").textContent = getSetting("Bank") || "-";
+            document.getElementById("rekening").textContent = getSetting("No Rekening") || "-";
+            document.getElementById("atasNama").textContent = getSetting("Atas Nama") || "-";
+            document.getElementById("footerUpdate").textContent = getSetting("Update Terakhir") || "-";
+            document.getElementById("copyrightYear").textContent = getSetting("Tahun") || "2026";
+
+            const status = getSetting("Status LPJ") || "Buka";
+            const el1 = document.getElementById("statusLPJ");
+            if (el1) el1.textContent = status;
+        }
+
+        function renderDashboard() {
+            let totalMasuk = 0, totalKeluar = 0;
+
+            kasMasuk.forEach(item => { totalMasuk += angka(getProp(item, "Nominal")); });
+            kasKeluar.forEach(item => { totalKeluar += angka(getProp(item, "Nominal")); });
+
+            const saldo = totalMasuk - totalKeluar;
+
+            document.getElementById("totalPemasukan").textContent = rupiah(totalMasuk);
+            document.getElementById("totalPengeluaran").textContent = rupiah(totalKeluar);
+            document.getElementById("saldoAkhir").textContent = rupiah(saldo);
+
+            document.getElementById("saldoAkhir").style.color = saldo >= 0 ? "#16a34a" : "#dc2626";
+        }
+
+        /* =====================================================
+           Tabel Grid Statistik Kabupaten (BACA KOLOM STANDAR)
+        =====================================================*/
+        function renderStatistikGrid() {
+            const gridContainer = document.getElementById("gridStatistik");
+            if (!gridContainer) return;
+            gridContainer.innerHTML = "";
+            
+            rekapKabupaten = {};
+            listKabupaten = [];
+
+            // 1. Ambil list nama dan total LANGSUNG dari kolom "Kabupaten" dan "Total Pemasukan"
+            if (statistik && statistik.length > 0) {
+                statistik.forEach(row => {
+                    const kabName = (getProp(row, "Kabupaten") || "").trim();
+                    const totalVal = angka(getProp(row, "Total Pemasukan"));
+
+                    if (kabName && kabName.toLowerCase() !== "total" && kabName.toLowerCase() !== "grand total") {
+                        if (!listKabupaten.includes(kabName)) {
+                            listKabupaten.push(kabName);
+                            rekapKabupaten[kabName] = totalVal;
+                        }
+                    }
+                });
+            }
+
+            // Jika data masih kosong, beri keterangan agar pengguna tahu masalahnya
+            if (listKabupaten.length === 0) {
+                gridContainer.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 20px; font-size: 13px; color: #64748b;">Belum ada data visual yang terbaca. Pastikan sheet Statistik memiliki kolom "Kabupaten" dan "Total Pemasukan".</div>`;
+                return;
+            }
+
+            // Cari nilai Max untuk mengatur panjang Data Bar (Persentase Lebar Warna)
+            const totalValues = Object.values(rekapKabupaten);
+            const maxTotal = totalValues.length > 0 ? Math.max(...totalValues) : 1;
+            const safeMax = maxTotal > 0 ? maxTotal : 1;
+
+            // 2. Cetak Box Grid HTML
+            listKabupaten.forEach(kab => {
+                const total = rekapKabupaten[kab] || 0;
+                
+                let barPct = (total / safeMax) * 100;
+                let bgClass = 'bg-purple'; 
+                let barColor = 'transparent';
+
+                if (total === 0) { 
+                    bgClass = 'bg-red'; 
+                    barPct = 0; 
+                } else if (total < 1000000) { 
+                    bgClass = 'bg-orange'; 
+                    barColor = '#f97316'; 
+                } else if (total < 5000000) { 
+                    bgClass = 'bg-yellow'; 
+                    barColor = '#eab308'; 
+                } else {
+                    bgClass = 'bg-green'; 
+                    barColor = '#22c55e'; 
+                }
+
+                gridContainer.innerHTML += `
+                    <div class="kab-card">
+                        <div class="kab-name" title="${kab}">${kab}</div>
+                        <div class="kab-val ${bgClass}" title="${rupiah(total)}">
+                            <div class="data-bar" style="width: ${barPct}%; background-color: ${barColor};"></div>
+                            ${total > 0 ? rupiah(total) : "0"}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        /* =====================================================
+           Tabel Kas Masuk & Keluar (Satu Baris, Fit Width)
+        =====================================================*/
+        function sortKasMasuk() {
+            kasMasuk.sort((a, b) => parseTanggal(getProp(a, "Tanggal")) - parseTanggal(getProp(b, "Tanggal")));
+        }
+
+        function sortKasKeluar() {
+            kasKeluar.sort((a, b) => parseTanggal(getProp(a, "Tanggal")) - parseTanggal(getProp(b, "Tanggal")));
+        }
+
+        function renderKasMasuk(data = kasMasuk) {
+            const tbody = document.getElementById("kasMasukBody");
+            tbody.innerHTML = "";
+
+            if (!data.length) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#64748b; white-space:normal;">Tidak ada data kas masuk.</td></tr>`;
+                return;
+            }
+
+            data.forEach((item) => {
+                const tr = document.createElement("tr");
+                const nama = getProp(item, "Nama Donatur");
+                const ket = getProp(item, "Keterangan");
+                const domisili = getProp(item, "Domisili");
+                const kab = getProp(item, "Kabupaten");
+                const metode = getProp(item, "Metode");
+                const nomText = rupiah(angka(getProp(item, "Nominal")));
+
+                const textNama = ket ? `${nama} <span class="text-muted">(${ket})</span>` : nama;
+                const textDomisili = kab ? `${domisili} <span class="text-muted">(${kab})</span>` : domisili;
+                const textNominal = metode ? `${nomText} <span class="text-muted">(${metode})</span>` : nomText;
+
+                tr.innerHTML = `
+                    <td title="${formatTanggalSingkat(getProp(item, "Tanggal"))}">${formatTanggalSingkat(getProp(item, "Tanggal"))}</td>
+                    <td style="font-weight: 500; color: #1e293b;" title="${nama} ${ket}">
+                        ${textNama}
+                    </td>
+                    <td title="${domisili} (${kab})">
+                        ${textDomisili}
+                    </td>
+                    <td style="text-align: right;" title="${nomText} (${metode})">
+                        <span class="nominal-val nominal-masuk">${textNominal}</span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderKasKeluar(data = kasKeluar) {
+            const tbody = document.getElementById("kasKeluarBody");
+            tbody.innerHTML = "";
+
+            if (!data.length) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#64748b; white-space:normal;">Tidak ada data kas keluar.</td></tr>`;
+                return;
+            }
+
+            data.forEach((item) => {
+                const tr = document.createElement("tr");
+                const keperluan = getProp(item, "Keperluan");
+                const kategori = getProp(item, "Kategori");
+                const penerima = getProp(item, "Penerima") || "-";
+                const dibayarOleh = getProp(item, "Dibayar oleh") || getProp(item, "Dibayar Melalui");
+                const ketNominal = getProp(item, "Keterangan") || "-";
+
+                const textKeperluan = kategori ? `${keperluan} <span class="text-muted">(${kategori})</span>` : keperluan;
+                const textPenerima = dibayarOleh ? `${penerima} <span class="text-muted">(by: ${dibayarOleh})</span>` : penerima;
+
+                tr.innerHTML = `
+                    <td title="${formatTanggalSingkat(getProp(item, "Tanggal"))}">${formatTanggalSingkat(getProp(item, "Tanggal"))}</td>
+                    <td style="font-weight: 500; color: #1e293b;" title="${keperluan} (${kategori})">
+                        ${textKeperluan}
+                    </td>
+                    <td title="${penerima} (${dibayarOleh})">
+                        ${textPenerima}
+                    </td>
+                    <td style="text-align: right;" title="${rupiah(angka(getProp(item, "Nominal")))} (${ketNominal})">
+                        <span class="nominal-val nominal-keluar">${rupiah(angka(getProp(item, "Nominal")))}</span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function initKasMasuk() {
+            sortKasMasuk();
+            renderKasMasuk();
+            document.getElementById("searchKasMasuk").addEventListener("input", function() {
+                const kw = this.value.toLowerCase();
+                const filtered = kasMasuk.filter(item => Object.values(item).join(" ").toLowerCase().includes(kw));
+                renderKasMasuk(filtered);
+            });
+        }
+
+        function initKasKeluar() {
+            sortKasKeluar();
+            renderKasKeluar();
+            document.getElementById("searchKasKeluar").addEventListener("input", function() {
+                const kw = this.value.toLowerCase();
+                const filtered = kasKeluar.filter(item => Object.values(item).join(" ").toLowerCase().includes(kw));
+                renderKasKeluar(filtered);
+            });
+        }
+
+        /* =====================================================
+           Navigasi & Kontrol PDF
+        =====================================================*/
+        function initNavigation() {
+            document.querySelectorAll(".nav-btn").forEach(button => {
+                button.addEventListener("click", function () {
+                    document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
+                    document.querySelectorAll(".page").forEach(pg => pg.classList.remove("active"));
+                    
+                    this.classList.add("active");
+                    document.getElementById(this.dataset.page).classList.add("active");
+                });
+            });
+        }
+
+        function initPDFEvents() {
+            const modal = document.getElementById("pdfModal");
+            document.getElementById("btnPDF").addEventListener("click", () => modal.classList.add("show"));
+            document.getElementById("closeModal").addEventListener("click", () => modal.classList.remove("show"));
+            modal.addEventListener("click", (e) => { if(e.target === modal) modal.classList.remove("show"); });
+
+            document.getElementById("downloadPDF").addEventListener("click", async function() {
+                this.disabled = true;
+                this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyusun PDF...';
+                try {
+                    await downloadPDF();
+                    showToast("Laporan LPJ PDF Berhasil Diunduh!");
+                } catch (e) {
+                    console.error(e);
+                    showToast("Gagal mengunduh laporan PDF.");
+                } finally {
+                    this.disabled = false;
+                    this.innerHTML = '<i class="fa-solid fa-download"></i> Unduh PDF';
+                    modal.classList.remove("show");
+                }
+            });
+        }
+
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+            const pW = pdf.internal.pageSize.getWidth();
+            const pH = pdf.internal.pageSize.getHeight();
+
+            // HEADER
+            pdf.setFont("helvetica", "bold");
+            pdf.setFontSize(16);
+            pdf.setTextColor(11, 107, 58);
+            pdf.text(getSetting("Nama LPJ") || "LPJ HAUL ALUMNI AL ALBAB", pW / 2, 20, { align: "center" });
+
+            pdf.setFontSize(12);
+            pdf.setTextColor(100);
+            pdf.text(getSetting("Sub Judul") || "Laporan Pertanggungjawaban Dana", pW / 2, 26, { align: "center" });
+            
+            pdf.setDrawColor(200);
+            pdf.line(15, 30, pW - 15, 30);
+
+            // 1. RINGKASAN SALDO
+            let cursorY = 38;
+            pdf.setFontSize(11);
+            pdf.setTextColor(40);
+            pdf.setFont("helvetica", "bold");
+            pdf.text("Ringkasan Saldo Akhir:", 15, cursorY);
+            
+            cursorY += 7;
+            pdf.setFont("helvetica", "normal");
+            pdf.text(`Total Pemasukan : ${document.getElementById("totalPemasukan").textContent}`, 15, cursorY); 
+            cursorY += 6;
+            pdf.text(`Total Pengeluaran : ${document.getElementById("totalPengeluaran").textContent}`, 15, cursorY); 
+            cursorY += 6;
+            pdf.setFont("helvetica", "bold");
+            pdf.setTextColor(11, 107, 58);
+            pdf.text(`Saldo Akhir Berjalan : ${document.getElementById("saldoAkhir").textContent}`, 15, cursorY); 
+            
+            cursorY += 14;
+
+            // 2. DIAGRAM STATISTIK GRID DI PDF
+            const statDataPdf = [];
+            let rowTemp = [];
+            
+            listKabupaten.forEach((kab) => {
+                const total = rekapKabupaten[kab] || 0;
+                rowTemp.push(`${kab}\n${total > 0 ? rupiah(total) : '0'}`);
+                
+                if (rowTemp.length === 5) { statDataPdf.push(rowTemp); rowTemp = []; }
+            });
+            if (rowTemp.length > 0) { while(rowTemp.length < 5) rowTemp.push(""); statDataPdf.push(rowTemp); }
+
+            pdf.setFont("helvetica", "bold"); 
+            pdf.setFontSize(13); 
+            pdf.setTextColor(11, 107, 58);
+            pdf.text("Statistik Pemasukan Per Kabupaten", pW / 2, cursorY, { align: "center" });
+
+            pdf.autoTable({
+                startY: cursorY + 5,
+                body: statDataPdf,
+                theme: "grid",
+                styles: { halign: 'center', valign: 'middle', fontSize: 9, fontStyle: 'bold', textColor: [15, 23, 42], cellPadding: 3 },
+                didParseCell: function(data) {
+                    if (data.section === 'body' && data.cell.raw) {
+                        const cellStr = data.cell.raw;
+                        if (cellStr.includes('\n')) {
+                            const valStr = cellStr.split('\n')[1];
+                            const val = angka(valStr);
+                            if (val === 0) data.cell.styles.fillColor = [252, 165, 165]; 
+                            else if (val < 1000000) data.cell.styles.fillColor = [253, 186, 116]; 
+                            else if (val < 5000000) data.cell.styles.fillColor = [254, 240, 138]; 
+                            else data.cell.styles.fillColor = [134, 239, 172]; 
+                        } else if (cellStr === "") {
+                            data.cell.styles.fillColor = [241, 245, 249];
+                        }
+                    }
+                }
+            });
+
+            // 3. TABEL KAS MASUK 
+            cursorY = pdf.lastAutoTable.finalY || cursorY;
+            if (cursorY > pH - 50) { pdf.addPage(); cursorY = 20; } else { cursorY += 15; }
+
+            pdf.setFont("helvetica", "bold"); 
+            pdf.setFontSize(13); 
+            pdf.setTextColor(11, 107, 58);
+            pdf.text("Data Rinci Kas Masuk", pW / 2, cursorY, { align: "center" });
+
+            const kmData = [];
+            kasMasuk.forEach((row, i) => {
+                kmData.push([
+                    i + 1,
+                    formatTanggalSingkat(getProp(row, "Tanggal")),
+                    getProp(row, "Nama Donatur") || "-",
+                    getProp(row, "Domisili") || "-",
+                    getProp(row, "Kabupaten") || "-",
+                    getProp(row, "Keterangan") || "-",
+                    getProp(row, "Metode") || "-",
+                    rupiah(angka(getProp(row, "Nominal")))
+                ]);
+            });
+            
+            pdf.autoTable({
+                startY: cursorY + 5,
+                head: [["No", "Tanggal", "Nama Donatur", "Domisili", "Kabupaten", "Keterangan", "Metode", "Nominal"]],
+                body: kmData,
+                theme: "grid",
+                styles: { fontSize: 8, cellPadding: 2 },
+                headStyles: { fillColor: [11, 107, 58], fontSize: 8 }
+            });
+
+            cursorY = pdf.lastAutoTable.finalY || cursorY;
+            if (cursorY > pH - 60) { pdf.addPage(); cursorY = 20; } else { cursorY += 15; }
+
+            // 4. REKAPITULASI KAS KELUAR 
+            pdf.setFont("helvetica", "bold"); 
+            pdf.setFontSize(13); 
+            pdf.setTextColor(220, 53, 69);
+            pdf.text("Rekapitulasi Pengeluaran Berdasarkan Kategori", pW / 2, cursorY, { align: "center" });
+
+            const rekapKategori = {};
+            let totalSemuaKeluar = 0;
+            kasKeluar.forEach(row => {
+                const kat = getProp(row, "Kategori") || "Lain-lain";
+                const nom = angka(getProp(row, "Nominal"));
+                if (!rekapKategori[kat]) rekapKategori[kat] = 0;
+                rekapKategori[kat] += nom;
+                totalSemuaKeluar += nom;
+            });
+
+            const rekapData = Object.keys(rekapKategori)
+                .map(k => ({ kat: k, val: rekapKategori[k] }))
+                .sort((a, b) => b.val - a.val)
+                .map((item, i) => [i + 1, item.kat, rupiah(item.val)]);
+
+            rekapData.push([{ content: "TOTAL SELURUH PENGELUARAN", colSpan: 2, styles: { halign: 'right', fontStyle: 'bold' } }, { content: rupiah(totalSemuaKeluar), styles: { fontStyle: 'bold' } }]);
+
+            pdf.autoTable({
+                startY: cursorY + 5,
+                head: [["No", "Kategori Pengeluaran", "Total Nominal"]],
+                body: rekapData,
+                theme: "grid",
+                styles: { fontSize: 8 },
+                headStyles: { fillColor: [220, 53, 69] },
+                margin: { left: 40, right: 40 }
+            });
+
+            // 5. TABEL KAS KELUAR 
+            cursorY = pdf.lastAutoTable.finalY || cursorY;
+            if (cursorY > pH - 40) { pdf.addPage(); cursorY = 20; } else { cursorY += 15; }
+
+            pdf.setFont("helvetica", "bold"); 
+            pdf.setFontSize(13); 
+            pdf.setTextColor(220, 53, 69);
+            pdf.text("Data Rinci Kas Keluar", pW / 2, cursorY, { align: "center" });
+
+            const kkData = [];
+            kasKeluar.forEach((row, i) => {
+                kkData.push([
+                    i + 1,
+                    formatTanggalSingkat(getProp(row, "Tanggal")),
+                    getProp(row, "Keperluan") || "-",
+                    getProp(row, "Kategori") || "-",
+                    getProp(row, "Penerima") || "-",
+                    getProp(row, "Dibayar oleh") || getProp(row, "Dibayar Melalui") || "-",
+                    getProp(row, "Keterangan") || "-",
+                    rupiah(angka(getProp(row, "Nominal")))
+                ]);
+            });
+
+            pdf.autoTable({
+                startY: cursorY + 5,
+                head: [["No", "Tanggal", "Keperluan", "Kategori", "Penerima", "Dibayar Oleh", "Keterangan", "Nominal"]],
+                body: kkData,
+                theme: "grid",
+                styles: { fontSize: 8, cellPadding: 2 },
+                headStyles: { fillColor: [220, 53, 69], fontSize: 8 }
+            });
+
+            // FOOTER PAGES
+            const totalPages = pdf.internal.getNumberOfPages();
+            for (let i = 1; i <= totalPages; i++) {
+                pdf.setPage(i);
+                pdf.setFontSize(8); 
+                pdf.setTextColor(140); 
+                pdf.setFont("helvetica", "normal");
+                pdf.text(`Halaman ${i} dari ${totalPages} | Dokumen Resmi LPJ`, pW / 2, pH - 10, { align: "center" });
+            }
+
+            pdf.save(`LPJ_HAUL_ALUMNI_${getSetting("Tahun") || "2026"}.pdf`);
+        }
+
+        /* =====================================================
+           Sistem Pemula (Initialization)
+        =====================================================*/
+        async function initWebsite() {
+            showLoading();
+            await loadSemuaData();
+
+            renderPengaturan();
+            renderDashboard();
+            renderStatistikGrid();
+            initKasMasuk();
+            initKasKeluar();
+
+            document.querySelector(".nav-btn").classList.add("active");
+            document.getElementById("dashboard").classList.add("active");
+
+            initNavigation();
+            initRefreshButton();
+            initPDFEvents();
+            autoRefresh();
+            hideLoading();
+        }
+
+        function initRefreshButton() {
+            const btn = document.getElementById("btnRefresh");
+            btn.addEventListener("click", async () => {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sinkronisasi...';
+                await refreshData();
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-rotate"></i> Refresh Data';
+            });
+        }
+
+        function autoRefresh() {
+            setInterval(async () => {
+                await loadSemuaData();
+                renderPengaturan();
+                renderDashboard();
+                renderStatistikGrid();
+                renderKasMasuk();
+                renderKasKeluar();
+                console.log("Auto-Refresh Google Sheets Sukses.");
+            }, 300000); 
+        }
+
+        document.addEventListener("DOMContentLoaded", initWebsite);
+    </script>
+</body>
+
+</html>
+
+
+```
