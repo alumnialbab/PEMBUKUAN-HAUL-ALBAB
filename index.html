@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPJ HAUL AL-ALBAB 2026</title>
+    
+    <!-- Menggunakan Tailwind CSS untuk Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Menggunakan Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Sembunyikan scrollbar tapi tetap bisa di-scroll jika terpaksa */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Memastikan tabel proporsional dan teks turun ke bawah jika panjang */
+        table { table-layout: fixed; width: 100%; }
+        td, th { word-wrap: break-word; overflow-wrap: break-word; white-space: normal; }
+        
+        /* Animasi Transisi Tab */
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans pb-10">
+
+    <!-- HEADER & NAVIGASI -->
+    <header class="bg-gradient-to-r from-slate-900 to-indigo-900 shadow-md sticky top-0 z-20">
+        <div class="max-w-6xl mx-auto px-3 md:px-6">
+            <div class="py-4 flex justify-between items-center">
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black text-white tracking-tight drop-shadow-md">
+                        LPJ HAUL AL-ALBAB 2026
+                    </h1>
+                    <p class="text-indigo-200 text-xs mt-0.5 font-medium">Laporan Keuangan Terpadu</p>
+                </div>
+                <button onclick="loadData()" class="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all backdrop-blur-sm border border-white/10" title="Sinkronkan Data">
+                    <i data-lucide="refresh-cw" id="refresh-icon" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <!-- TAB BUTTONS -->
+            <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-3">
+                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="flex items-center gap-1.5 py-2 px-4 rounded-lg text-sm font-bold transition-all whitespace-nowrap bg-white text-indigo-900 shadow-sm">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+                </button>
+                <button onclick="switchTab('masuk')" id="btn-masuk" class="flex items-center gap-1.5 py-2 px-4 rounded-lg text-sm font-bold transition-all whitespace-nowrap bg-white/10 text-indigo-100 hover:bg-white/20">
+                    <i data-lucide="log-in" class="w-4 h-4"></i> Masuk
+                </button>
+                <button onclick="switchTab('keluar')" id="btn-keluar" class="flex items-center gap-1.5 py-2 px-4 rounded-lg text-sm font-bold transition-all whitespace-nowrap bg-white/10 text-indigo-100 hover:bg-white/20">
+                    <i data-lucide="log-out" class="w-4 h-4"></i> Keluar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- LOADING STATE -->
+    <div id="loading-state" class="flex flex-col items-center justify-center py-20">
+        <i data-lucide="loader-2" class="w-10 h-10 text-indigo-500 animate-spin mb-3"></i>
+        <p class="text-slate-500 text-sm font-medium text-center">Menyinkronkan data otomatis<br/>dari Google Sheets...</p>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content" class="max-w-6xl mx-auto px-2 md:px-6 pt-5 hidden">
+        
+        <!-- ================= TAB 1: DASHBOARD ================= -->
+        <div id="tab-dashboard" class="tab-content active space-y-5">
+            
+            <!-- 3 KARTU SALDO (Font diperbesar, tampil utuh) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+                <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-4 md:p-6 rounded-xl shadow-md text-white relative overflow-hidden">
+                    <i data-lucide="arrow-up-circle" class="absolute top-2 right-2 w-12 h-12 opacity-20"></i>
+                    <p class="text-emerald-50 font-bold uppercase tracking-wider mb-1 text-xs md:text-sm z-10 relative">Total Masuk</p>
+                    <h2 id="card-masuk" class="text-xl md:text-3xl font-black z-10 relative break-words">0</h2>
+                </div>
+                
+                <div class="bg-gradient-to-br from-rose-500 to-rose-600 p-4 md:p-6 rounded-xl shadow-md text-white relative overflow-hidden">
+                    <i data-lucide="arrow-down-circle" class="absolute top-2 right-2 w-12 h-12 opacity-20"></i>
+                    <p class="text-rose-50 font-bold uppercase tracking-wider mb-1 text-xs md:text-sm z-10 relative">Total Keluar</p>
+                    <h2 id="card-keluar" class="text-xl md:text-3xl font-black z-10 relative break-words">0</h2>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-4 md:p-6 rounded-xl shadow-md text-white relative overflow-hidden">
+                    <i data-lucide="wallet" class="absolute top-2 right-2 w-12 h-12 opacity-20"></i>
+                    <p class="text-indigo-100 font-bold uppercase tracking-wider mb-1 text-xs md:text-sm z-10 relative">Saldo Akhir</p>
+                    <h2 id="card-saldo" class="text-xl md:text-3xl font-black z-10 relative break-words">0</h2>
+                </div>
+            </div>
+
+            <!-- GRID: STATISTIK KABUPATEN -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-sm md:text-base font-black text-slate-800 mb-3 flex items-center gap-1.5">
+                    <i data-lucide="map-pin" class="text-emerald-500 w-4 h-4"></i> STATISTIK PER KABUPATEN
+                </h3>
+                <div id="grid-kabupaten" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 text-center">
+                    <!-- Data akan di-render di sini -->
+                </div>
+            </div>
+
+            <!-- GRID: PENGELUARAN PER BIDANG -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-sm md:text-base font-black text-slate-800 mb-3 flex items-center gap-1.5">
+                    <i data-lucide="tag" class="text-rose-500 w-4 h-4"></i> PENGELUARAN PER BIDANG
+                </h3>
+                <div id="grid-bidang" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 text-center">
+                    <!-- Data akan di-render di sini -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 2: MASUK ================= -->
+        <div id="tab-masuk" class="tab-content">
+            <div class="bg-white rounded-xl shadow-md border border-emerald-100 overflow-hidden">
+                <div class="p-3 bg-emerald-500 flex justify-between items-center">
+                    <h3 class="font-bold text-white text-sm flex items-center gap-1.5">
+                        <i data-lucide="log-in" class="w-4 h-4"></i> DATA PEMASUKAN
+                    </h3>
+                </div>
+                
+                <!-- KOLOM PENCARIAN MASUK -->
+                <div class="p-2 md:p-3 bg-emerald-50 border-b border-emerald-100 flex items-center gap-2">
+                    <i data-lucide="search" class="text-emerald-400 w-4 h-4 hidden md:block"></i>
+                    <input type="text" onkeyup="filterTable('table-masuk-body', this.value)" placeholder="Ketik kata kunci pencarian (Tanggal, Nama, dsb)..." class="w-full p-2 text-xs md:text-sm rounded-lg border border-emerald-200 outline-none focus:ring-2 focus:ring-emerald-400">
+                </div>
+
+                <div class="p-0">
+                    <table class="w-full text-left border-collapse text-[9px] md:text-xs">
+                        <thead>
+                            <tr class="bg-slate-50 text-emerald-800 border-b border-emerald-100">
+                                <th class="p-2 w-[15%]">TANGGAL</th>
+                                <th class="p-2 w-[20%]">NAMA</th>
+                                <th class="p-2 w-[15%]">KECAMATAN</th>
+                                <th class="p-2 w-[15%]">KABUPATEN</th>
+                                <th class="p-2 w-[20%] text-right">NOMINAL</th>
+                                <th class="p-2 w-[15%]">KET</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-masuk-body" class="divide-y divide-slate-100">
+                            <!-- Data akan di-render di sini -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 3: KELUAR ================= -->
+        <div id="tab-keluar" class="tab-content">
+            <div class="bg-white rounded-xl shadow-md border border-rose-100 overflow-hidden">
+                <div class="p-3 bg-rose-500 flex justify-between items-center">
+                    <h3 class="font-bold text-white text-sm flex items-center gap-1.5">
+                        <i data-lucide="log-out" class="w-4 h-4"></i> DATA PENGELUARAN
+                    </h3>
+                </div>
+
+                <!-- KOLOM PENCARIAN KELUAR -->
+                <div class="p-2 md:p-3 bg-rose-50 border-b border-rose-100 flex items-center gap-2">
+                    <i data-lucide="search" class="text-rose-400 w-4 h-4 hidden md:block"></i>
+                    <input type="text" onkeyup="filterTable('table-keluar-body', this.value)" placeholder="Ketik kata kunci pencarian (Tanggal, Rincian, dsb)..." class="w-full p-2 text-xs md:text-sm rounded-lg border border-rose-200 outline-none focus:ring-2 focus:ring-rose-400">
+                </div>
+
+                <div class="p-0">
+                    <table class="w-full text-left border-collapse text-[9px] md:text-xs">
+                        <thead>
+                            <tr class="bg-slate-50 text-rose-800 border-b border-rose-100">
+                                <th class="p-2 w-[15%]">TANGGAL</th>
+                                <th class="p-2 w-[25%]">RINCIAN</th>
+                                <th class="p-2 w-[20%] text-right">NOMINAL</th>
+                                <th class="p-2 w-[15%] text-center">BIDANG</th>
+                                <th class="p-2 w-[25%]">KETERANGAN</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-keluar-body" class="divide-y divide-slate-100">
+                            <!-- Data akan di-render di sini -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- SCRIPT LOGIKA PROGRAM -->
+    <script>
+        // Inisialisasi Ikon
+        lucide.createIcons();
+
+        // 2 LINK SUMBER DATA
+        const URL_MASUK = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuw9lwBqmE-QXNGnkve7jfODEspAOl8-2PreidQYoMKxpj5L2lge2nClw9Q60VHlKto6MwEpVR5mG1/pub?gid=0&single=true&output=csv';
+        const URL_KELUAR = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuw9lwBqmE-QXNGnkve7jfODEspAOl8-2PreidQYoMKxpj5L2lge2nClw9Q60VHlKto6MwEpVR5mG1/pub?gid=2013501993&single=true&output=csv';
+
+        let dataMasuk = [];
+        let dataKeluar = [];
+
+        // Format Angka Biasa (Tanpa Rp) Contoh: 1.500.000
+        const formatNumber = (angka) => {
+            if(!angka || angka === 0) return '-';
+            return new Intl.NumberFormat('id-ID').format(angka);
+        };
+
+        // Pembersih Angka Super Akurat
+        function cleanNumber(str) {
+            if(!str) return 0;
+            let s = str.toString().toUpperCase().replace(/RP/g, '').trim();
+            s = s.replace(/,00$/, '').replace(/\.00$/, ''); 
+            s = s.replace(/[^0-9]/g, ''); 
+            return parseInt(s, 10) || 0;
+        }
+
+        // Fitur Pencarian Tabel
+        function filterTable(tableId, query) {
+            const tbody = document.getElementById(tableId);
+            const rows = tbody.getElementsByTagName('tr');
+            const q = query.toLowerCase();
+
+            for (let i = 0; i < rows.length; i++) {
+                if(rows[i].cells.length === 1) continue; // Abaikan baris kosong
+                
+                let match = false;
+                for (let j = 0; j < rows[i].cells.length; j++) {
+                    if (rows[i].cells[j].innerText.toLowerCase().includes(q)) {
+                        match = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = match ? '' : 'none';
+            }
+        }
+
+        // Fungsi Ganti Tab
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+
+            const btns = ['dashboard', 'masuk', 'keluar'];
+            btns.forEach(id => {
+                document.getElementById('btn-' + id).className = "flex items-center gap-1.5 py-2 px-4 rounded-lg text-sm font-bold transition-all whitespace-nowrap bg-white/10 text-indigo-100 hover:bg-white/20";
+            });
+
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if(tabId === 'dashboard') activeBtn.className = "flex items-center gap-1.5 py-2 px-4 rounded-lg text-sm font-bold transition-all whitespace-nowrap bg-white text-indigo-900 shadow-sm";
+            else if(tabId === 'masuk') activeBtn.className = "flex items-center gap-1.5 py-2 px-4 rounded-lg text-sm font-bold transition-all whitespace-nowrap bg-emerald-500 text-white shadow-sm";
+            else if(tabId === 'keluar') activeBtn.className = "flex items-center gap-1.5 py-2 px-4 rounded-lg text-sm font-bold transition-all whitespace-nowrap bg-rose-500 text-white shadow-sm";
+        }
+
+        // Fungsi Membaca CSV
+        async function loadData() {
+            const icon = document.getElementById('refresh-icon');
+            icon.classList.add('animate-spin');
+            document.getElementById('loading-state').style.display = 'flex';
+            document.getElementById('main-content').style.display = 'none';
+
+            try {
+                const [resMasuk, resKeluar] = await Promise.all([
+                    fetch(URL_MASUK),
+                    fetch(URL_KELUAR)
+                ]);
+                
+                const csvMasuk = await resMasuk.text();
+                const csvKeluar = await resKeluar.text();
+
+                dataMasuk = parseCSV(csvMasuk, 'masuk');
+                dataKeluar = parseCSV(csvKeluar, 'keluar');
+
+                renderAll();
+
+            } catch (error) {
+                console.error("Gagal menarik data:", error);
+                alert("Gagal terhubung ke Google Sheets. Pastikan koneksi internet stabil.");
+            } finally {
+                icon.classList.remove('animate-spin');
+                document.getElementById('loading-state').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                lucide.createIcons();
+            }
+        }
+
+        // Parser CSV Fleksibel
+        function parseCSV(csvText, type) {
+            const rows = csvText.split('\n');
+            let results = [];
+            let headers = [];
+            let headerParsed = false;
+
+            rows.forEach(line => {
+                const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c ? c.replace(/^"|"$/g, '').trim() : '');
+                
+                if (!headerParsed) {
+                    if (cols.some(c => c.toLowerCase().includes('tanggal') || c.toLowerCase().includes('tgl'))) {
+                        headers = cols.map(c => c.toLowerCase());
+                        headerParsed = true;
+                    }
+                    return;
+                }
+
+                if (headerParsed && (cols[0] || cols[1])) {
+                    const getVal = (possibleNames) => {
+                        let idx = headers.findIndex(h => possibleNames.some(pn => h.includes(pn)));
+                        return idx !== -1 ? cols[idx] : '';
+                    };
+
+                    let nominalStr = type === 'masuk' ? getVal(['masuk', 'nominal']) : getVal(['keluar', 'nominal']);
+
+                    results.push({
+                        tanggal: getVal(['tanggal', 'tgl']),
+                        nama: getVal(['nama', 'rincian']),
+                        kecamatan: getVal(['kecamatan']),
+                        kabupaten: getVal(['kabupaten']),
+                        bidang: getVal(['bidang', 'kecamatan']),
+                        nominal: cleanNumber(nominalStr),
+                        keterangan: getVal(['ket'])
+                    });
+                }
+            });
+            return results;
+        }
+
+        // Fungsi Sortir Tanggal (Kecil ke Besar / Lama ke Baru)
+        function parseDateForSort(dateStr) {
+            if(!dateStr) return 0;
+            // Deteksi format tanggal umum di Excel/Sheets (dd/mm/yyyy atau yyyy-mm-dd)
+            let parts = dateStr.split(/[-/]/);
+            if(parts.length === 3) {
+                if(parts[0] > 12) return new Date(`${parts[0]}-${parts[1]}-${parts[2]}`).getTime(); // yyyy-mm-dd
+                if(parts[2].length === 4) return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`).getTime(); // dd/mm/yyyy
+            }
+            return new Date(dateStr).getTime() || 0;
+        }
+
+        // Fungsi Render Semua Tampilan
+        function renderAll() {
+            let tMasuk = 0, tKeluar = 0;
+            let statsKab = {};
+            let statsBidang = {};
+
+            dataMasuk.forEach(t => {
+                tMasuk += t.nominal;
+                if (t.nominal > 0 && t.kabupaten) {
+                    statsKab[t.kabupaten] = (statsKab[t.kabupaten] || 0) + t.nominal;
+                }
+            });
+
+            dataKeluar.forEach(t => {
+                tKeluar += t.nominal;
+                if (t.nominal > 0) {
+                    let b = t.bidang ? t.bidang : 'Lain-lain';
+                    statsBidang[b] = (statsBidang[b] || 0) + t.nominal;
+                }
+            });
+
+            // Update Kartu Utama (Font besar, format angka utuh tanpa Rp)
+            document.getElementById('card-masuk').textContent = formatNumber(tMasuk);
+            document.getElementById('card-keluar').textContent = formatNumber(tKeluar);
+            document.getElementById('card-saldo').textContent = formatNumber(tMasuk - tKeluar);
+
+            // Render Grid Kabupaten (Font diperbesar, format angka utuh tanpa Rp)
+            const gridKab = document.getElementById('grid-kabupaten');
+            gridKab.innerHTML = '';
+            if(Object.keys(statsKab).length === 0) {
+                gridKab.innerHTML = '<p class="text-xs text-slate-400 col-span-full">Belum ada data</p>';
+            } else {
+                Object.entries(statsKab).sort((a,b) => b[1]-a[1]).forEach(([kab, jumlah]) => {
+                    gridKab.innerHTML += `
+                    <div class="bg-emerald-50 p-3 rounded-lg border border-emerald-100 flex flex-col justify-center h-full">
+                        <p class="text-[10px] md:text-xs font-bold text-slate-500 uppercase mb-1 break-words">${kab}</p>
+                        <p class="font-black text-emerald-600 text-sm md:text-base">${formatNumber(jumlah)}</p>
+                    </div>`;
+                });
+            }
+
+            // Render Grid Bidang (Font diperbesar, format angka utuh tanpa Rp)
+            const gridBidang = document.getElementById('grid-bidang');
+            gridBidang.innerHTML = '';
+            if(Object.keys(statsBidang).length === 0) {
+                gridBidang.innerHTML = '<p class="text-xs text-slate-400 col-span-full">Belum ada data</p>';
+            } else {
+                Object.entries(statsBidang).sort((a,b) => b[1]-a[1]).forEach(([bid, jumlah]) => {
+                    gridBidang.innerHTML += `
+                    <div class="bg-rose-50 p-3 rounded-lg border border-rose-100 flex flex-col justify-center h-full">
+                        <p class="text-[10px] md:text-xs font-bold text-slate-500 uppercase mb-1 break-words">${bid}</p>
+                        <p class="font-black text-rose-600 text-sm md:text-base">${formatNumber(jumlah)}</p>
+                    </div>`;
+                });
+            }
+
+            // --- SORTING DATA (Kecil ke Besar / Terlama ke Terbaru) ---
+            const sortAscending = (a, b) => parseDateForSort(a.tanggal) - parseDateForSort(b.tanggal);
+
+            // Render Tabel Masuk (Semua Kolom, Wrap Text, Sort Ascending)
+            const tbMasuk = document.getElementById('table-masuk-body');
+            tbMasuk.innerHTML = '';
+            const dataIn = [...dataMasuk].filter(t => t.nominal > 0).sort(sortAscending);
+            
+            if(dataIn.length === 0) {
+                tbMasuk.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">Belum ada data pemasukan</td></tr>`;
+            } else {
+                dataIn.forEach(t => {
+                    tbMasuk.innerHTML += `
+                    <tr class="hover:bg-emerald-50/50 even:bg-slate-50/50">
+                        <td class="p-2 font-medium text-slate-600 align-top">${t.tanggal}</td>
+                        <td class="p-2 font-bold text-slate-800 align-top break-words whitespace-normal">${t.nama}</td>
+                        <td class="p-2 text-slate-600 align-top break-words whitespace-normal">${t.kecamatan || '-'}</td>
+                        <td class="p-2 text-slate-600 align-top break-words whitespace-normal">${t.kabupaten || '-'}</td>
+                        <td class="p-2 font-black text-emerald-600 text-right align-top break-words whitespace-normal">${formatNumber(t.nominal)}</td>
+                        <td class="p-2 text-slate-500 align-top break-words whitespace-normal">${t.keterangan || '-'}</td>
+                    </tr>`;
+                });
+            }
+
+            // Render Tabel Keluar (Semua Kolom, Wrap Text, Sort Ascending)
+            const tbKeluar = document.getElementById('table-keluar-body');
+            tbKeluar.innerHTML = '';
+            const dataOut = [...dataKeluar].filter(t => t.nominal > 0).sort(sortAscending);
+            
+            if(dataOut.length === 0) {
+                tbKeluar.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">Belum ada data pengeluaran</td></tr>`;
+            } else {
+                dataOut.forEach(t => {
+                    tbKeluar.innerHTML += `
+                    <tr class="hover:bg-rose-50/50 even:bg-slate-50/50">
+                        <td class="p-2 font-medium text-slate-600 align-top">${t.tanggal}</td>
+                        <td class="p-2 font-bold text-slate-800 align-top break-words whitespace-normal">${t.nama}</td>
+                        <td class="p-2 font-black text-rose-600 text-right align-top break-words whitespace-normal">${formatNumber(t.nominal)}</td>
+                        <td class="p-2 text-center align-top break-words whitespace-normal">
+                            <span class="bg-rose-100 text-rose-700 px-1.5 py-1 rounded text-[9px] font-bold uppercase block w-full text-center">
+                                ${t.bidang || 'Umum'}
+                            </span>
+                        </td>
+                        <td class="p-2 text-slate-500 align-top break-words whitespace-normal">${t.keterangan || '-'}</td>
+                    </tr>`;
+                });
+            }
+        }
+
+        window.onload = loadData;
+    </script>
+</body>
+</html>
+
+
